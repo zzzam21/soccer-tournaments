@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     "teams.apps.TeamsConfig",
     "gameEvents.apps.GameEventsConfig",
     "player.apps.PlayerConfig",
+    "game.apps.GameConfig",
+    "match.apps.MatchConfig",
     
 ]
 
