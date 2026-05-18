@@ -1,0 +1,77 @@
+<div class="modal-overlay" (click)="cancel()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <div class="modal-content p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="modal-title m-0">{{ title() }}</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cancel()"></button>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="mb-3">
+          <label for="playerName" class="form-label">Nombre del jugador</label>
+          <input
+            id="playerName"
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Ej: Lionel Messi"
+            [class.is-invalid]="isFieldInvalid('name')"
+          />
+          @if (isFieldInvalid('name')) {
+            <div class="invalid-feedback">El nombre es obligatorio (máx. 100 caracteres).</div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="playerTeam" class="form-label">Equipo</label>
+          <select
+            id="playerTeam"
+            class="form-select"
+            formControlName="team"
+          >
+            <option [value]="0">Sin equipo</option>
+            @for (t of teams(); track t.id) {
+              <option [value]="t.id">{{ t.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label for="playerPhoto" class="form-label">Foto (URL)</label>
+          <div class="photo-input-wrapper">
+            <input
+              id="playerPhoto"
+              type="url"
+              class="form-control"
+              formControlName="photo"
+              placeholder="https://ejemplo.com/foto.jpg"
+              (input)="onPhotoInput($any($event.target).value)"
+            />
+            @if (photoPreview) {
+              <button type="button" class="btn-clear-photo" (click)="clearPhoto()" title="Limpiar foto">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                </svg>
+              </button>
+            }
+          </div>
+          @if (photoPreview) {
+            <div class="photo-preview mt-2">
+              <img [src]="photoPreview" alt="Vista previa" (error)="clearPhoto()" />
+            </div>
+          }
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+          <button type="submit" class="btn btn-primary gradient-button" [disabled]="form.invalid || saving()">
+            @if (saving()) {
+              <span class="spinner-border spinner-border-sm me-1"></span>
+            }
+            {{ submitLabel() }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
