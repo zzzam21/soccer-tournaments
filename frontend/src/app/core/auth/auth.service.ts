@@ -17,6 +17,18 @@ export class AuthService {
     });
   }
 
+  register(data: {
+    username: string;
+    email: string;
+    password: string;
+    confirm_password: string;
+  }): Observable<{ token: string; username: string }> {
+    return this.http.post<{ token: string; username: string }>(
+      `${this.apiUrl}/api/auth/register/`,
+      data,
+    );
+  }
+
   isAuthenticated(): boolean {
     return AuthToken.has();
   }

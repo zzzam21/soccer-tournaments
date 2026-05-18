@@ -6,6 +6,24 @@
         "description": "API de gestión de torneos de fútbol"
     },
     "paths": {
+        "/api/auth/register/": {
+            "post": {
+                "operationId": "auth_register_create",
+                "tags": [
+                    "auth"
+                ],
+                "security": [
+                    {
+                        "tokenAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "No response body"
+                    }
+                }
+            }
+        },
         "/api/auth/token/": {
             "post": {
                 "operationId": "auth_token_create",

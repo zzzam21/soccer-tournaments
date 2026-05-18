@@ -3,10 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
-import Swal from 'sweetalert2';
 
 import { AuthActions } from '../../../store/Authentication/authentication.actions';
 import { selectAuthLoading, selectAuthError, selectIsAuthenticated } from '../../../store/Authentication/authentication.selectors';
+import { showErrorToast, showSuccessToast } from '../../../shared/utils/toast';
 
 @Component({
   selector: 'app-login',
@@ -27,38 +27,11 @@ export class LoginComponent implements OnInit {
   constructor() {
     effect(() => {
       const err = this.error();
-      if (err) {
-        void Swal.fire({
-          icon: 'error',
-          text: err,
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          background: '#111827',
-          color: '#F8FAFC',
-          iconColor: '#EF4444',
-        });
-      }
+      if (err) showErrorToast(err);
     });
 
     effect(() => {
-      if (this.isAuthenticated()) {
-        void Swal.fire({
-          icon: 'success',
-          title: 'Inicio de sesión exitoso',
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          background: '#111827',
-          color: '#F8FAFC',
-          iconColor: '#22C55E',
-          confirmButtonColor: '#22C55E',
-        });
-      }
+      if (this.isAuthenticated()) showSuccessToast('Inicio de sesión exitoso');
     });
   }
 
