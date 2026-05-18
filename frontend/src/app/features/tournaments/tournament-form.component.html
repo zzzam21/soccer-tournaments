@@ -1,0 +1,78 @@
+<div class="modal-overlay" (click)="cancel()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <div class="modal-content p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="modal-title m-0">{{ title() }}</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cancel()"></button>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="row g-3">
+          <div class="col-12">
+            <label for="tName" class="form-label">Nombre del torneo</label>
+            <input id="tName" type="text" class="form-control" formControlName="name" placeholder="Ej: Copa Mundial 2026"
+              [class.is-invalid]="isFieldInvalid('name')" />
+            @if (isFieldInvalid('name')) {
+              <div class="invalid-feedback">El nombre es obligatorio (máx. 100 caracteres).</div>
+            }
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="tCity" class="form-label">Ciudad</label>
+            <input id="tCity" type="text" class="form-control" formControlName="city" placeholder="Ej: Ciudad de México"
+              [class.is-invalid]="isFieldInvalid('city')" />
+            @if (isFieldInvalid('city')) {
+              <div class="invalid-feedback">La ciudad es obligatoria.</div>
+            }
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="tType" class="form-label">Tipo</label>
+            <select id="tType" class="form-select" formControlName="tournament_type">
+              <option value="International">Internacional</option>
+              <option value="Local">Local</option>
+              <option value="Regional">Regional</option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label for="tStatus" class="form-label">Estado</label>
+            <select id="tStatus" class="form-select" formControlName="status">
+              <option value="Upcoming">Próximo</option>
+              <option value="Ongoing">En curso</option>
+              <option value="Completed">Finalizado</option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label for="tStart" class="form-label">Fecha inicio</label>
+            <input id="tStart" type="date" class="form-control" formControlName="start_date"
+              [class.is-invalid]="isFieldInvalid('start_date')" />
+            @if (isFieldInvalid('start_date')) {
+              <div class="invalid-feedback">Requerido.</div>
+            }
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label for="tEnd" class="form-label">Fecha fin</label>
+            <input id="tEnd" type="date" class="form-control" formControlName="end_date"
+              [class.is-invalid]="isFieldInvalid('end_date')" />
+            @if (isFieldInvalid('end_date')) {
+              <div class="invalid-feedback">Requerido.</div>
+            }
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+          <button type="submit" class="btn btn-primary gradient-button" [disabled]="form.invalid || saving()">
+            @if (saving()) {
+              <span class="spinner-border spinner-border-sm me-1"></span>
+            }
+            {{ submitLabel() }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

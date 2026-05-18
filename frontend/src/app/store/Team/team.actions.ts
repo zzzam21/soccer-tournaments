@@ -8,11 +8,11 @@ export const TeamActions = createActionGroup({
     'Load Success': props<{ list: Team[] }>(),
     'Load Failure': props<{ error: string }>(),
 
-    Create: props<{ name: string; tournament: number }>(),
+    Create: props<{ name: string; tournaments?: number[] }>(),
     'Create Success': props<{ item: Team }>(),
     'Create Failure': props<{ error: string }>(),
 
-    Update: props<{ id: number; name: string; tournament: number }>(),
+    Update: props<{ id: number; name: string; tournaments?: number[] }>(),
     'Update Success': props<{ item: Team }>(),
     'Update Failure': props<{ error: string }>(),
 

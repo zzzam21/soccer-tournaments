@@ -66,7 +66,7 @@
         <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
           <app-team-card
             [team]="team"
-            [tournamentName]="tournamentName().get(team.tournament) || ''"
+            [tournamentNames]="teamTournamentList(team)"
             (onEdit)="openEditForm($event)"
             (onDelete)="confirmDelete($event)"
           />

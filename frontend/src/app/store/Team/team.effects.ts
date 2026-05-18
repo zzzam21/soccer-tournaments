@@ -28,8 +28,8 @@ export class TeamEffects {
   createTeam$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TeamActions.create),
-      mergeMap(({ name, tournament }) =>
-        this.teamsService.teamsCreate(0, name, tournament).pipe(
+      mergeMap(({ name, tournaments }) =>
+        this.teamsService.teamsCreate(0, name, tournaments).pipe(
           map((item) => TeamActions.createSuccess({ item })),
           catchError((err) =>
             of(TeamActions.createFailure({ error: err.message ?? 'Error al crear equipo' })),
@@ -42,8 +42,8 @@ export class TeamEffects {
   updateTeam$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TeamActions.update),
-      mergeMap(({ id, name, tournament }) =>
-        this.teamsService.teamsPartialUpdate(id, name, tournament).pipe(
+      mergeMap(({ id, name, tournaments }) =>
+        this.teamsService.teamsPartialUpdate(id, name, tournaments).pipe(
           map((item) => TeamActions.updateSuccess({ item })),
           catchError((err) =>
             of(TeamActions.updateFailure({ error: err.message ?? 'Error al actualizar equipo' })),

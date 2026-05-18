@@ -1,7 +1,7 @@
 export interface Team {
   id: number;
   name: string;
-  tournament: number;
+  tournaments?: number[];
 }
 
 export interface TeamState {

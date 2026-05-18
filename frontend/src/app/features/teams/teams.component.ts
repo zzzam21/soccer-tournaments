@@ -33,7 +33,7 @@ export class TeamsComponent implements OnInit {
     const list = this.teams();
     const filterId = this.filterTournamentId();
     if (!filterId) return list;
-    return list.filter((t) => t.tournament === filterId);
+    return list.filter((t) => t.tournaments?.includes(filterId));
   });
 
   showForm = signal(false);
@@ -43,10 +43,7 @@ export class TeamsComponent implements OnInit {
   saving = signal(false);
   deleting = signal(false);
 
-  tournamentName = computed(() => {
-    const map = new Map(this.tournaments().map((t) => [t.id, t.name]));
-    return map;
-  });
+  tournamentNamesMap = computed(() => new Map(this.tournaments().map((t) => [t.id, t.name])));
 
   ngOnInit(): void {
     this.store.dispatch(TeamActions.load());
@@ -60,6 +57,14 @@ export class TeamsComponent implements OnInit {
   onFilterChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     this.filterTournamentId.set(+target.value);
+  }
+
+  teamTournamentList(team: Team): string {
+    const map = this.tournamentNamesMap();
+    return (team.tournaments ?? [])
+      .map((id) => map.get(id))
+      .filter((name): name is string => !!name)
+      .join(', ');
   }
 
   openCreateForm(): void {
@@ -77,7 +82,7 @@ export class TeamsComponent implements OnInit {
     this.editingTeam.set(null);
   }
 
-  onSaveForm(data: { name: string; tournament: number }): void {
+  onSaveForm(data: { name: string; tournaments?: number[] }): void {
     const edit = this.editingTeam();
     this.saving.set(true);
 

@@ -4,10 +4,10 @@ from tournaments.models import Tournament
 
 class Team(models.Model):
     name = models.CharField(max_length=255)
-    tournament = models.ForeignKey(
+    tournaments = models.ManyToManyField(
         Tournament,
-        on_delete=models.CASCADE,
-        related_name='teams'
+        related_name='teams',
+        blank=True,
     )
 
     def __str__(self):
