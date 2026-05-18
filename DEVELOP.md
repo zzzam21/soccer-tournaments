@@ -49,6 +49,11 @@ cd soccer-tournaments
 cp .env.example .env
 # Editar .env si es necesario
 
+# 4. Instalar Dependencias
+cd frontend
+npm install
+cd ..
+
 # 3. Construir imágenes e iniciar stack completo
 docker compose up -d --build
 
