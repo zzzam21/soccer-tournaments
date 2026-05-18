@@ -20,6 +20,6 @@ class TournamentTest(TestCase):
         self.assertEqual(str(tournament), "Copa América")
 
     def test_tournament_list_view(self):
-        response = self.client.get(reverse("home"))
+        response = self.client.get(reverse("tournament-API"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Copa América")
