@@ -10,3 +10,10 @@ class StatsSerializer(serializers.Serializer):
     total_goals = serializers.IntegerField()
     ongoing_tournaments = serializers.IntegerField()
     completed_tournaments = serializers.IntegerField()
+
+
+class ContactSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=100)
+    email = serializers.EmailField()
+    subject = serializers.CharField(max_length=200)
+    message = serializers.CharField()
