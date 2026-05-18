@@ -26,8 +26,10 @@ Instrucciones completas para levantar el ambiente local, trabajar con el fronten
 |---|---|---|
 | Docker Desktop | 4.x | https://www.docker.com/products/docker-desktop |
 | Node.js | 20.x | https://nodejs.org |
+| npm | 11.x | (viene con Node.js) |
 | Python | 3.12 | https://www.python.org |
 | Git | 2.x | https://git-scm.com |
+| Git Bash (Windows) | — | (viene con Git; necesario para scripts `.sh`) |
 
 ---
 
@@ -44,20 +46,25 @@ cd soccer-tournaments
 cp .env.example .env
 # Editar .env si es necesario
 
-# 3. Construir imágenes Docker
+# 3. Instalar dependencias del frontend (node_modules está en .gitignore)
+cd frontend
+npm install
+cd ..
+
+# 4. Construir imágenes Docker
 docker compose build
 
-# 4. Levantar stack completo
+# 5. Levantar stack completo
 docker compose up -d
 
-# 5. Verificar que todo está funcionando
+# 6. Verificar que todo está funcionando
 curl http://localhost:8000/api/utils/health-check/
 # → {"status": "ok", "database": "connected"}
 
 curl http://localhost:4200
 # → HTML del frontend
 
-# 6. (Opcional) Generar cliente HTTP desde el schema
+# 7. (Opcional) Generar cliente HTTP desde el schema
 bash scripts/generate-client.sh
 ```
 
@@ -234,7 +241,7 @@ Genera el cliente Angular desde el OpenAPI del backend.
 bash scripts/generate-client.sh
 ```
 
-**Requiere:** backend corriendo en `localhost:8000`.
+**Requiere:** backend corriendo en `localhost:8000` y haber ejecutado `npm install` en `frontend/` para instalar `ng-openapi` como dependencia de desarrollo.
 
 ---
 
@@ -243,8 +250,11 @@ bash scripts/generate-client.sh
 Para desarrollo activo del frontend con hot-reload:
 
 ```bash
-# El backend debe estar corriendo (con Docker)
+# 1. (Primera vez) Instalar dependencias (node_modules está en .gitignore)
 cd frontend
+npm install
+
+# 2. El backend debe estar corriendo (con Docker o local)
 npm start      # levanta ng serve en http://localhost:4200
 ```
 
@@ -265,11 +275,21 @@ npm run test            # tests
 Para correr el backend localmente (requiere PostgreSQL accesible):
 
 ```bash
-# Con Docker corriendo solo la base de datos
+# 1. (Primera vez) Crear entorno virtual e instalar dependencias
+cd backend
+python -m venv .venv
+source .venv/bin/activate   # Linux/Mac
+# .venv\Scripts\activate    # Windows
+pip install -r requirements.txt
+
+# 2. Con Docker corriendo solo la base de datos
 docker compose up -d db
 
-# Correr el backend en modo desarrollo con hot-reload
-cd backend
+# 3. Correr migraciones y seed data
+python manage.py migrate
+python initial_data.py
+
+# 4. Correr el backend en modo desarrollo con hot-reload
 python manage.py runserver 0.0.0.0:8000
 ```
 
@@ -402,6 +422,23 @@ docker compose up -d frontend
 ```
 
 Para desarrollo activo con hot-reload, usar `npm start` directamente (ver sección 7).
+
+### El cliente HTTP no se genera: "Cannot find module 'ng-openapi'"
+
+`ng-openapi` debe estar instalado como dev dependency:
+
+```bash
+cd frontend
+npm install
+```
+
+### El cliente HTTP no se genera: "Unexpected token" en swagger.json
+
+El schema debe descargarse como JSON, no YAML. Asegúrate de que `scripts/generate-client.sh` use `?format=json`:
+
+```bash
+curl -s "http://localhost:8000/api/schema/?format=json" -o frontend/swagger.json
+```
 
 ### El puerto 4200 o 8000 ya está en uso
 

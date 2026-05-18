@@ -5,7 +5,7 @@ BACKEND_URL="${BACKEND_URL:-http://localhost:8000}"
 OUTPUT_DIR="frontend/src/client"
 
 echo "Downloading API schema from $BACKEND_URL/api/schema/..."
-curl -s "$BACKEND_URL/api/schema/?format=yaml" -o frontend/swagger.json
+curl -s "$BACKEND_URL/api/schema/?format=json" -o frontend/swagger.json
 
 echo "Generating Angular client..."
 cd frontend
