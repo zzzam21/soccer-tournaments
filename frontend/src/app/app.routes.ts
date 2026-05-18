@@ -48,7 +48,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/players/players.component').then((m) => m.PlayersComponent),
       },
-      { path: '', redirectTo: 'tournaments', pathMatch: 'full' },
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard').then((m) => m.Dashboard),
+      },
     ],
   },
   { path: '**', redirectTo: 'auth/login' },
