@@ -37,3 +37,10 @@ Thumbs.db
 dist/
 build/
 *.egg-info/
+
+# Node / Frontend
+node_modules/
+.angular/
+frontend/src/client/
+frontend/swagger.json
+npm-debug.log*

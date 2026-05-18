@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'drf_spectacular',
+    'utils',
     'tournaments.apps.TournamentsConfig',
     'teams.apps.TeamsConfig',
     'gameEvents.apps.GameEventsConfig',
@@ -32,6 +34,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Soccer Tournaments API',
+    'DESCRIPTION': 'API de gestión de torneos de fútbol',
+    'VERSION': '1.0.0',
 }
 
 CORS_ALLOWED_ORIGINS = config(
