@@ -98,6 +98,33 @@
   }
 }
 
+.section-contact {
+  background-color: $bg-body;
+
+  .contact-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($primary, 0.1);
+    color: $primary;
+    flex-shrink: 0;
+  }
+
+  .contact-form {
+    .form-control {
+      background-color: $bg-elevated;
+      border-color: $border-input;
+
+      &:focus {
+        background-color: $bg-elevated;
+      }
+    }
+  }
+}
+
 .section-tournaments {
   background-color: $bg-body;
 
