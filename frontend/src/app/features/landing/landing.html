@@ -327,22 +327,34 @@
       </div>
 
       <div class="col-lg-6">
-        <form class="contact-form">
+        <form class="contact-form" #f="ngForm" (ngSubmit)="sendContact(name.value, email.value, subject.value, msg.value)">
           <div class="row g-3">
             <div class="col-md-6">
-              <input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre">
+              <input #name type="text" class="form-control" placeholder="Nombre" aria-label="Nombre" required>
             </div>
             <div class="col-md-6">
-              <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+              <input #email type="email" class="form-control" placeholder="Email" aria-label="Email" required>
             </div>
             <div class="col-12">
-              <input type="text" class="form-control" placeholder="Asunto" aria-label="Asunto">
+              <input #subject type="text" class="form-control" placeholder="Asunto" aria-label="Asunto" required>
             </div>
             <div class="col-12">
-              <textarea class="form-control" rows="4" placeholder="Mensaje" aria-label="Mensaje"></textarea>
+              <textarea #msg class="form-control" rows="4" placeholder="Mensaje" aria-label="Mensaje" required></textarea>
             </div>
             <div class="col-12">
-              <button type="submit" class="btn btn-primary px-4">Enviar mensaje</button>
+              @if (contactSent()) {
+                <div class="alert alert-success py-2 mb-3">Mensaje enviado correctamente</div>
+              }
+              @if (contactError(); as err) {
+                <div class="alert alert-danger py-2 mb-3">{{ err }}</div>
+              }
+              <button type="submit" class="btn btn-primary px-4" [disabled]="contactSending() || f.invalid">
+                @if (contactSending()) {
+                  Enviando...
+                } @else {
+                  Enviar mensaje
+                }
+              </button>
             </div>
           </div>
         </form>
