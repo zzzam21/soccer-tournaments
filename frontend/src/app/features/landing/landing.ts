@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from '../../layouts/navbar/navbar.component';
+import { FooterComponent } from '../../layouts/footer/footer.component';
 
 @Component({
   selector: 'app-landing',
-  imports: [RouterOutlet],
-  template: `<router-outlet />`,
+  templateUrl: './landing.html',
+  imports: [NavbarComponent, FooterComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Landing {}
