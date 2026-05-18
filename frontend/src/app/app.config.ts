@@ -14,6 +14,7 @@ import { TournamentEffects } from './store/Tournament/tournament.effects';
 import { TeamEffects } from './store/Team/team.effects';
 import { MatchEffects } from './store/Match/match.effects';
 import { StatsEffects } from './store/Stats/stats.effects';
+import { PlayerEffects } from './store/Player/player.effects';
 import { provideDefaultClient } from '../client/providers';
 
 export const appConfig: ApplicationConfig = {
@@ -35,6 +36,7 @@ export const appConfig: ApplicationConfig = {
       TeamEffects,
       MatchEffects,
       StatsEffects,
+      PlayerEffects,
     ),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],

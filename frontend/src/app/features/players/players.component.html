@@ -1,0 +1,100 @@
+<div class="players-page">
+  <header class="page-header d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Jugadores</h1>
+      <p class="page-subtitle mb-0">Gestiona los jugadores participantes en los torneos</p>
+    </div>
+    <button class="btn btn-primary gradient-button d-flex align-items-center gap-2" (click)="openCreateForm()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+      </svg>
+      Agregar Jugador
+    </button>
+  </header>
+
+  @if (error(); as err) {
+    <div class="alert alert-danger d-flex align-items-center gap-2 mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" class="flex-shrink-0">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+      </svg>
+      <div>{{ err }}</div>
+    </div>
+  }
+
+  <div class="filters mb-4">
+    <div class="row g-2 align-items-end">
+      <div class="col-sm-4">
+        <label class="form-label filter-label">Filtrar por equipo</label>
+        <select class="form-select" [value]="filterTeamId()" (change)="onFilterChange($event)">
+          <option [value]="0">Todos los equipos</option>
+          @for (t of teams(); track t.id) {
+            <option [value]="t.id">{{ t.name }}</option>
+          }
+        </select>
+      </div>
+      <div class="col-sm-auto">
+        <span class="text-muted-custom small">
+          {{ filteredPlayers().length }} jugador{{ filteredPlayers().length !== 1 ? 'es' : '' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary mb-3" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted-custom">Cargando jugadores...</p>
+    </div>
+  } @else if (filteredPlayers().length === 0) {
+    <div class="empty-state text-center py-5 section-dark rounded-4">
+      <div class="empty-icon mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16" class="text-muted-custom">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+          <path d="M2 0a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1.5A.5.5 0 0 1 2.5 1h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+          <path d="M11 6a3 3 0 0 1 3 3v1a2 2 0 0 1-2 2H9.828a2 2 0 0 1-.246-.025A4 4 0 0 0 7 10.17V9a3 3 0 0 1 3-3zM1.5 5A1.5 1.5 0 0 1 3 3.5h1A1.5 1.5 0 0 1 5.5 5v1A1.5 1.5 0 0 1 4 7.5H3A1.5 1.5 0 0 1 1.5 6z"/>
+        </svg>
+      </div>
+      <h5 class="mb-2">No hay jugadores</h5>
+      <p class="text-muted-custom mb-4">
+        {{ filterTeamId() ? 'No hay jugadores en este equipo.' : 'Comienza agregando tu primer jugador.' }}
+      </p>
+      <button class="btn btn-primary gradient-button" (click)="openCreateForm()">Agregar Jugador</button>
+    </div>
+  } @else {
+    <div class="row g-3">
+      @for (player of filteredPlayers(); track trackById($index, player)) {
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+          <app-player-card
+            [player]="player"
+            [teamName]="teamName().get(player.team ?? -1) || ''"
+            (onEdit)="openEditForm($event)"
+            (onDelete)="confirmDelete($event)"
+          />
+        </div>
+      }
+    </div>
+  }
+</div>
+
+@if (showForm()) {
+  <app-player-form
+    [teams]="teams()"
+    [saving]="saving()"
+    [editingPlayer]="editingPlayer()"
+    [title]="editingPlayer() ? 'Editar Jugador' : 'Agregar Jugador'"
+    [submitLabel]="editingPlayer() ? 'Actualizar' : 'Guardar'"
+    (onSave)="onSaveForm($event)"
+    (onCancel)="closeForm()"
+  />
+}
+
+@if (showDeleteDialog()) {
+  <app-confirm-delete
+    [playerName]="deletingPlayer()?.name ?? ''"
+    [deleting]="deleting()"
+    (onConfirm)="executeDelete()"
+    (onCancel)="cancelDelete()"
+  />
+}
