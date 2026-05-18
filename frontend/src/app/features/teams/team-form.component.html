@@ -1,0 +1,55 @@
+<div class="modal-overlay" (click)="cancel()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <div class="modal-content p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="modal-title m-0">{{ title() }}</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cancel()"></button>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="mb-3">
+          <label for="teamName" class="form-label">Nombre del equipo</label>
+          <input
+            id="teamName"
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Ej: Real Madrid"
+            [class.is-invalid]="isFieldInvalid('name')"
+          />
+          @if (isFieldInvalid('name')) {
+            <div class="invalid-feedback">El nombre es obligatorio (máx. 255 caracteres).</div>
+          }
+        </div>
+
+        <div class="mb-4">
+          <label for="teamTournament" class="form-label">Torneo</label>
+          <select
+            id="teamTournament"
+            class="form-select"
+            formControlName="tournament"
+            [class.is-invalid]="isFieldInvalid('tournament')"
+          >
+            <option [value]="0" disabled>Seleccione un torneo</option>
+            @for (t of tournaments(); track t.id) {
+              <option [value]="t.id">{{ t.name }}</option>
+            }
+          </select>
+          @if (isFieldInvalid('tournament')) {
+            <div class="invalid-feedback">Debe seleccionar un torneo.</div>
+          }
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+          <button type="submit" class="btn btn-primary gradient-button" [disabled]="form.invalid || saving()">
+            @if (saving()) {
+              <span class="spinner-border spinner-border-sm me-1"></span>
+            }
+            {{ submitLabel() }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

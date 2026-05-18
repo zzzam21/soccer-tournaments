@@ -1,0 +1,31 @@
+@import 'variables';
+
+.team-card {
+  transition: all 0.2s ease;
+  cursor: default;
+
+  &:hover {
+    border-color: $primary;
+  }
+}
+
+.team-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: $gradient-button;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  font-family: $font-family-headings;
+  flex-shrink: 0;
+}
+
+.min-width-0 {
+  min-width: 0;
+}
+
+.btn-sm {
+  padding: 0.3rem 0.5rem;
+  line-height: 1;
+}
