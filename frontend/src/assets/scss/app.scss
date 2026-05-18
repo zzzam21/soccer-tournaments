@@ -1,1 +1,230 @@
-// App specific styles
+@import 'variables';
+
+// ── Custom Properties ─────────────────────────────────────────
+:root {
+  --primary: #{$primary};
+  --primary-hover: #{$primary-hover};
+  --bg-body: #{$bg-body};;
+  --bg-surface: #{$bg-surface};
+  --bg-elevated: #{$bg-elevated};
+  --bg-navbar: #{$bg-navbar};
+  --bg-sidebar: #{$bg-sidebar};
+  --text-primary: #{$text-primary};
+  --text-secondary: #{$text-secondary};
+  --text-muted: #{$text-muted};
+  --text-subtle: #{$text-subtle};
+  --border-default: #{$border-default};
+  --border-input: #{$border-input};
+  --shadow-default: #{$shadow-default};
+}
+
+// ── Gradient Utilities ────────────────────────────────────────
+.gradient-hero {
+  background: $gradient-hero;
+}
+
+.gradient-button {
+  background: $gradient-button;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, $primary, $primary-hover);
+}
+
+// ── Shadow Utilities ──────────────────────────────────────────
+.shadow-card {
+  box-shadow: $shadow-card;
+  transition: box-shadow 0.3s ease;
+}
+
+// ── Card Theme ────────────────────────────────────────────────
+.card {
+  background-color: $card-bg;
+  border: 1px solid $card-border-color;
+  box-shadow: $shadow-card;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: $shadow-card-hover;
+  }
+}
+
+.card-hover {
+  &:hover {
+    background-color: $bg-card-hover;
+    border-color: $border-input;
+  }
+}
+
+// ── Button Overrides ──────────────────────────────────────────
+.btn-primary {
+  background-color: $primary;
+  border-color: $primary;
+
+  &:hover, &:focus {
+    background-color: $primary-hover;
+    border-color: $primary-hover;
+  }
+}
+
+.btn-secondary {
+  background-color: $btn-secondary-bg;
+  border-color: $btn-secondary-bg;
+  color: $btn-secondary-color;
+
+  &:hover, &:focus {
+    background-color: $btn-secondary-hover-bg;
+    border-color: $btn-secondary-hover-bg;
+    color: $btn-secondary-color;
+  }
+}
+
+.btn-danger {
+  &:hover, &:focus {
+    background-color: $btn-danger-hover-bg;
+    border-color: $btn-danger-hover-bg;
+  }
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  border-radius: $border-radius;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+// ── Navbar ────────────────────────────────────────────────────
+.navbar {
+  background-color: $bg-navbar;
+  border-bottom: 1px solid $border-navbar-bottom;
+}
+
+// ── Sidebar ───────────────────────────────────────────────────
+.sidebar {
+  background-color: $bg-sidebar;
+
+  .nav-link {
+    color: $text-secondary;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $bg-elevated;
+      color: $text-primary;
+    }
+
+    &.active {
+      background-color: rgba($primary, 0.1);
+      color: $primary;
+    }
+  }
+}
+
+// ── Status Badges ─────────────────────────────────────────────
+.badge-live {
+  background-color: $state-live;
+  color: #FFF;
+}
+
+.badge-finished {
+  background-color: $state-finished;
+  color: #FFF;
+}
+
+.badge-upcoming {
+  background-color: $state-upcoming;
+  color: #FFF;
+}
+
+.badge-classified {
+  background-color: $state-classified;
+  color: #FFF;
+}
+
+.badge-eliminated {
+  background-color: $state-eliminated;
+  color: #FFF;
+}
+
+// ── Table Theme ───────────────────────────────────────────────
+.table {
+  thead {
+    background-color: $table-dark-bg;
+
+    th {
+      color: $table-dark-color;
+      border-bottom: none;
+      font-weight: 600;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: $table-hover-bg;
+      }
+    }
+
+    td {
+      color: $table-color;
+      vertical-align: middle;
+    }
+  }
+}
+
+// ── Input Theme ───────────────────────────────────────────────
+.form-control, .form-select {
+  border-radius: $border-radius;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus {
+    border-color: $input-focus-border-color;
+    box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
+  }
+
+  &::placeholder {
+    color: $input-placeholder-color;
+  }
+}
+
+// ── Dropdown Theme ────────────────────────────────────────────
+.dropdown-menu {
+  box-shadow: $shadow-default;
+}
+
+// ── Modal Theme ───────────────────────────────────────────────
+.modal-content {
+  box-shadow: $shadow-default;
+}
+
+// ── Footer ────────────────────────────────────────────────────
+.footer {
+  background-color: $bg-navbar;
+  color: $text-muted;
+
+  a {
+    color: $text-secondary;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+// ── Section Backgrounds ───────────────────────────────────────
+.section-dark {
+  background-color: $bg-surface;
+}
+
+.section-darker {
+  background-color: $bg-body;
+}
+
+// ── Text Utilities ────────────────────────────────────────────
+.text-primary-custom { color: $primary; }
+.text-secondary-custom { color: $text-secondary; }
+.text-muted-custom { color: $text-muted; }
+.text-subtle-custom { color: $text-subtle; }

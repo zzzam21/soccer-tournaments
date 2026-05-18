@@ -92,15 +92,29 @@ Los directorios vacíos están preparados para crecer según las necesidades del
 Definidas en `_variables.scss` (partial, no genera CSS por sí mismo):
 
 ```scss
-// src/assets/scss/_variables.scss
-$primary:   #405189;     // Azul oscuro corporativo
-$secondary: #6c757d;     // Gris Bootstrap
-$success:   #0ab39c;     // Verde
-$info:      #299cdb;     // Azul claro
-$warning:   #f7b84b;     // Amarillo
-$danger:    #f06548;     // Rojo
+// Bootstrap overrides
+$primary:   #22C55E;     // Verde deportivo
+$secondary: #0F172A;     // Azul oscuro premium
+$success:   #4ADE80;     // Verde claro
+$info:      #38BDF8;     // Azul neon
+$warning:   #FACC15;     // Amarillo dorado
+$danger:    #EF4444;     // Rojo moderno
+$body-bg:   #020617;     // Negro azulado (fondo general)
+$body-color:#CBD5E1;     // Gris claro (texto secundario)
+$headings-color: #F8FAFC; // Blanco suave
 
-$font-family-base: 'Poppins', sans-serif;
+$font-family-base: 'Inter', sans-serif;
+$headings-font-family: 'Poppins', sans-serif;
+$border-radius: 14px;
+
+// Custom
+$primary-hover: #16A34A;
+$text-primary: #F8FAFC; $text-secondary: #CBD5E1; $text-muted: #64748B;
+$bg-surface: #111827; $bg-elevated: #1E293B; $bg-navbar: #0F172A;
+$state-live: #EF4444; $state-upcoming: #38BDF8;
+$state-classified: #22C55E; $state-eliminated: #F59E0B;
+$gradient-hero: linear-gradient(135deg, #0F172A 0%, #111827 50%, #16A34A 100%);
+$shadow-default: 0 4px 20px rgba(0,0,0,0.25);
 ```
 
 Estas variables sobreescriben las de Bootstrap ANTES de que Bootstrap se compile, gracias al orden de `bootstrap.scss`:
@@ -158,6 +172,38 @@ Esto también funciona para archivos dentro de `components/`, `pages/`, etc., un
 ```
 
 Las rutas son absolutas desde la raíz del sitio porque `angular.json` mapea esos directorios a `/assets/`.
+
+### Utility classes disponibles (definidas en `app.scss`)
+
+```scss
+// Gradientes
+.gradient-hero         // fondo hero: #0F172A → #111827 → #16A34A
+.gradient-button       // fondo botón: #22C55E → #16A34A
+.bg-gradient-primary   // fondo primary degradado
+
+// Sombras
+.shadow-card           // 0 4px 20px rgba(0,0,0,0.25)
+
+// Cards con hover
+.card-hover            // eleva bg + border al hover
+
+// Badges de estado
+.badge-live            // rojo (#EF4444)
+.badge-upcoming        // azul (#38BDF8)
+.badge-finished        // gris (#64748B)
+.badge-classified      // verde (#22C55E)
+.badge-eliminated      // amarillo (#F59E0B)
+
+// Fondos de sección
+.section-dark          // #111827
+.section-darker        // #020617
+
+// Texto
+.text-primary-custom   // #22C55E
+.text-secondary-custom // #CBD5E1
+.text-muted-custom     // #64748B
+.text-subtle-custom    // #94A3B8
+```
 
 ---
 
@@ -220,7 +266,7 @@ Luego importarlo desde `app.scss` o desde el componente que lo necesite.
 | **Prefiero `@import` sobre `@use`** por ahora | El proyecto arrancó con `@import` y `silenceDeprecations` activado. Migrar a `@use` progresivamente. |
 | **Componentes con `:host`** | Usa `:host { }` en componentes Angular para evitar fugas de estilo. |
 | **No sobreescribir Bootstrap** sin necesidad | Usa las utilidades de Bootstrap (`d-flex`, `gap-3`, `text-primary`) antes de escribir CSS custom. |
-| **Paleta de colores** | Usa siempre las variables de `_variables.scss`. Nunca colores hardcodeados como `#405189`. |
+| **Paleta de colores** | Usa siempre las variables de `_variables.scss`. Nunca colores hardcodeados como `#22C55E`. |
 | **Archivos en `components/`** | Son para estilos de componentes reutilizables (ej. botones, tarjetas, tablas). No confundir con estilos de componentes Angular. |
 | **Archivos en `pages/`** | Solo para layouts complejos de página (ej. layout de dashboard). La mayoría del estilo debe vivir en el `.scss` del componente Angular. |
 | **Fuentes** | Mantén solo pesos usados (Regular, Medium, Bold). Prefiere woff2 sobre ttf. |

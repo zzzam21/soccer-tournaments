@@ -107,16 +107,31 @@ Los estilos globales están en `src/assets/scss/`. Configuración en `angular.js
 ### Variables disponibles (`_variables.scss`)
 
 ```scss
-$primary: #405189; $secondary: #6c757d; $success: #0ab39c;
-$info: #299cdb; $warning: #f7b84b; $danger: #f06548;
-$font-family-base: 'Poppins', sans-serif;
+// Bootstrap overrides
+$primary: #22C55E; $secondary: #0F172A; $success: #4ADE80;
+$info: #38BDF8; $warning: #FACC15; $danger: #EF4444;
+$body-bg: #020617; $body-color: #CBD5E1;
+$font-family-base: 'Inter', sans-serif;
+$headings-font-family: 'Poppins', sans-serif;
+$border-radius: 14px;
+
+// Custom
+$primary-hover: #16A34A;
+$text-primary: #F8FAFC; $text-secondary: #CBD5E1; $text-muted: #64748B;
+$bg-surface: #111827; $bg-elevated: #1E293B; $bg-navbar: #0F172A;
+$state-live: #EF4444; $state-upcoming: #38BDF8;
+$state-classified: #22C55E; $state-eliminated: #F59E0B;
+$gradient-hero: linear-gradient(135deg, #0F172A 0%, #111827 50%, #16A34A 100%);
+$shadow-default: 0 4px 20px rgba(0,0,0,0.25);
 ```
 
 ### Uso en componentes
 
 ```scss
 @import 'variables';
-.card { border-color: $primary; }
+.card { border-color: $border-default; }
+.badge-live { background-color: $state-live; }
+.btn-custom { background: $gradient-button; }
 ```
 
 Rutas absolutas para assets: `url('/assets/images/logo.svg')`.
