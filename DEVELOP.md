@@ -37,7 +37,8 @@ Instrucciones completas para levantar el ambiente local, trabajar con el fronten
 
 ### Primera vez
 
-> **Nota:** `frontend/src/client/` es código generado. Si ya está commiteado en el repo, salta al paso 4 directamente.
+El cliente HTTP Angular (`frontend/src/client/`) se genera automáticamente durante
+el Docker build desde `frontend/swagger.json` (commiteado en el repo).
 
 ```bash
 # 1. Clonar y entrar al proyecto
@@ -48,40 +49,33 @@ cd soccer-tournaments
 cp .env.example .env
 # Editar .env si es necesario
 
-# 3. Instalar dependencias del frontend (necesario para generar el cliente)
-cd frontend
-npm install
-cd ..
+# 3. Construir imágenes e iniciar stack completo
+docker compose up -d --build
 
-# 4. Construir e iniciar backend + base de datos primero
-docker compose build backend
-docker compose up -d db backend
-
-# 5. Esperar ~30 segundos a que el backend esté listo (migraciones + seed)
-curl http://localhost:8000/api/utils/health-check/
-# → {"status": "ok", "database": "connected"}
-
-# 6. Generar el cliente HTTP Angular desde el schema OpenAPI
-#    (en Windows usar Git Bash)
-bash scripts/generate-client.sh
-
-# 7. Construir el frontend (ahora que el cliente existe)
-docker compose build frontend
-
-# 8. Levantar el stack completo
-docker compose up -d
-
-# 9. Verificar que todo está funcionando
+# 4. Verificar que todo está funcionando
 curl http://localhost:8000/api/utils/health-check/
 # → {"status": "ok", "database": "connected"}
 
 curl http://localhost:4200
 # → HTML del frontend
+```
 
-# 10. (Solo la primera vez) Commitear el cliente generado
-#     para que futuros clones no necesiten repetir estos pasos
-git add frontend/src/client/
-git commit -m "feat: cliente HTTP generado desde OpenAPI"
+### Actualizar el cliente cuando cambia el backend
+
+Cuando se agregan o modifican endpoints en Django, regenerar el schema y el cliente:
+
+```bash
+# 1. El backend debe estar corriendo
+bash scripts/generate-client.sh   # actualiza swagger.json + src/client local
+                                   # (en Windows usar Git Bash)
+
+# 2. Commitear el schema actualizado
+git add frontend/swagger.json
+git commit -m "feat: actualizar schema OpenAPI"
+
+# 3. Reconstruir frontend para tomar los cambios
+docker compose build frontend
+docker compose up -d frontend
 ```
 
 ### Días siguientes (stack ya inicializado)

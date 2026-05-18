@@ -6,6 +6,7 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 COPY . .
+RUN npx ng-openapi --config openapi.config.ts
 RUN npm run build
 
 FROM nginx:1.27-alpine
