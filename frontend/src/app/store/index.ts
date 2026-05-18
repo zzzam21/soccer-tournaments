@@ -10,6 +10,8 @@ import { TeamState } from './Team/team.models';
 import { teamReducer } from './Team/team.reducer';
 import { MatchState } from './Match/match.models';
 import { matchReducer } from './Match/match.reducer';
+import { StatsState } from './Stats/stats.models';
+import { statsReducer } from './Stats/stats.reducer';
 
 export interface RootReducerState {
   auth: AuthState;
@@ -17,6 +19,7 @@ export interface RootReducerState {
   tournament: TournamentState;
   team: TeamState;
   match: MatchState;
+  stats: StatsState;
 }
 
 export const rootReducer: ActionReducerMap<RootReducerState> = {
@@ -25,4 +28,5 @@ export const rootReducer: ActionReducerMap<RootReducerState> = {
   tournament: tournamentReducer,
   team: teamReducer,
   match: matchReducer,
+  stats: statsReducer,
 };
