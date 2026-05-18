@@ -96,8 +96,68 @@ Los endpoints siguen `/api/{resource}/` con DRF:
 - Mismo patrón para teams, matches, games, players, gameevents
 - `POST /api/auth/token/` — login (token DRF)
 
+## Estilos globales (SCSS)
+
+Los estilos globales están en `src/assets/scss/`. Configuración en `angular.json`:
+
+- **`stylePreprocessorOptions.includePaths`**: `["src/assets/scss"]` — permite `@import 'variables'` desde cualquier `.scss` sin ruta relativa.
+- **`styles`**: `bootstrap.scss` → `icons.scss` → `app.scss` → `styles.scss` (orden de carga).
+- **`assets`**: `images/` → `/assets/images/`, `fonts/` → `/assets/fonts/`.
+
+### Variables disponibles (`_variables.scss`)
+
+```scss
+$primary: #405189; $secondary: #6c757d; $success: #0ab39c;
+$info: #299cdb; $warning: #f7b84b; $danger: #f06548;
+$font-family-base: 'Poppins', sans-serif;
+```
+
+### Uso en componentes
+
+```scss
+@import 'variables';
+.card { border-color: $primary; }
+```
+
+Rutas absolutas para assets: `url('/assets/images/logo.svg')`.
+
+### Directorios preparados
+
+`components/`, `pages/`, `plugins/`, `structure/`, `theme/`, `fonts/` — vacíos, listos para crecer.
+
+Ver `docs/SCSS_GUIDE.md` para referencia completa.
+
 ## NgRx
 
 Cada feature store sigue el patrón: `models.ts` → `actions.ts` → `reducer.ts` → `effects.ts` → `selectors.ts`.
 
 Store slices actuales: `auth`, `layout`, `tournament`, `team`, `match`.
+
+### Patrón estándar por slice
+
+```typescript
+// models.ts
+interface XxxState { list: Entity[]; selected?: Entity; loading: boolean; error: string | null }
+
+// actions.ts — createActionGroup con load/loadSuccess/loadFailure
+export const XxxActions = createActionGroup({ source: 'Xxx', events: {
+  Load: emptyProps(),
+  'Load Success': props<{ list: Xxx[] }>(),
+  'Load Failure': props<{ error: string }>(),
+}});
+
+// reducer.ts — createReducer con on() para cada acción
+// selectors.ts — createFeatureSelector + createSelector
+// effects.ts — @Injectable() class con createEffect() para llamadas HTTP
+```
+
+### Conectar componente al store
+
+```typescript
+private store = inject(Store);
+tournaments = toSignal(this.store.select(selectTournamentList), { initialValue: [] });
+
+ngOnInit() { this.store.dispatch(TournamentActions.load()); }
+```
+
+Ver `docs/NGRX_GUIDE.md` para referencia completa.
