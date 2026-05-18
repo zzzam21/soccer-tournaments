@@ -9,20 +9,22 @@ import { selectAuthLoading, selectAuthError, selectIsAuthenticated } from '../..
 import { showErrorToast, showSuccessToast } from '../../../shared/utils/toast';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [FormsModule, RouterLink],
-  templateUrl: './login.html',
-  styleUrl: './login.scss',
+  templateUrl: './register.html',
+  styleUrl: './register.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
+export class Register implements OnInit {
   private store = inject(Store);
 
   loading = toSignal(this.store.select(selectAuthLoading), { initialValue: false });
   error = toSignal(this.store.select(selectAuthError), { initialValue: null });
   isAuthenticated = toSignal(this.store.select(selectIsAuthenticated), { initialValue: false });
+
   showPassword = false;
+  showConfirmPassword = false;
 
   constructor() {
     effect(() => {
@@ -31,7 +33,7 @@ export class LoginComponent implements OnInit {
     });
 
     effect(() => {
-      if (this.isAuthenticated()) showSuccessToast('Inicio de sesión exitoso');
+      if (this.isAuthenticated()) showSuccessToast('Cuenta creada exitosamente');
     });
   }
 
@@ -39,8 +41,28 @@ export class LoginComponent implements OnInit {
     this.store.dispatch(AuthActions.clearError());
   }
 
-  onSubmit(username: string, password: string): void {
-    if (!username || !password) return;
-    this.store.dispatch(AuthActions.login({ username, password }));
+  passwordsMatch(password: string, confirm: string): boolean {
+    return password === confirm;
+  }
+
+  onSubmit(
+    username: string,
+    email: string,
+    password: string,
+    confirmPassword: string,
+  ): void {
+    if (!username || !email || !password || !confirmPassword) return;
+    if (!this.passwordsMatch(password, confirmPassword)) {
+      showErrorToast('Las contraseñas no coinciden', 3000);
+      return;
+    }
+    this.store.dispatch(
+      AuthActions.register({
+        username,
+        email,
+        password,
+        confirm_password: confirmPassword,
+      }),
+    );
   }
 }

@@ -1,10 +1,8 @@
 export interface Match {
   id: number;
+  number: number;
+  start_date: string;
   tournament: number;
-  home_team: number;
-  away_team: number;
-  date: string;
-  status: string;
 }
 
 export interface MatchState {

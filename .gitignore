@@ -43,3 +43,4 @@ node_modules/
 .angular/
 frontend/src/client
 npm-debug.log*
+frontend/swagger.json

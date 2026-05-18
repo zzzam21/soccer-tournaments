@@ -3,9 +3,12 @@ from django.urls import include, path
 from rest_framework.authtoken.views import obtain_auth_token
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
+from .auth_views import RegisterView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/token/', obtain_auth_token, name='api-token-auth'),
+    path('api/auth/register/', RegisterView.as_view(), name='api-auth-register'),
     path('api/utils/', include('utils.urls')),
     path('api/tournaments/', include('tournaments.urls')),
     path('api/teams/', include('teams.urls')),

@@ -1,0 +1,83 @@
+@import 'variables';
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: $bg-surface;
+  border-right: 1px solid $border-default;
+  z-index: 100;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid $border-default;
+}
+
+.sidebar-brand-text {
+  font-family: $headings-font-family;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+// ── Navigation ──────────────────────────────────────────
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: 0.75rem;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: 10px;
+  color: $text-secondary;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $bg-elevated;
+    color: $text-primary;
+  }
+
+  &.active {
+    background-color: rgba($primary, 0.1);
+    color: $primary;
+
+    svg {
+      stroke: $primary;
+    }
+  }
+
+  svg {
+    flex-shrink: 0;
+    transition: stroke 0.2s ease;
+  }
+}
+
+// ── Footer ──────────────────────────────────────────────
+.sidebar-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid $border-default;
+}
+
+.sidebar-copyright {
+  margin: 0;
+  font-size: 0.75rem;
+  color: $text-muted;
+}

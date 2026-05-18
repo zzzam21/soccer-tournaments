@@ -13,6 +13,11 @@ export const routes: Routes = [
       import('./features/auth/login/login').then((m) => m.LoginComponent),
   },
   {
+    path: 'auth/register',
+    loadComponent: () =>
+      import('./features/auth/register/register').then((m) => m.Register),
+  },
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('./layouts/layout.component').then((m) => m.LayoutComponent),
@@ -43,7 +48,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/players/players.component').then((m) => m.PlayersComponent),
       },
-      { path: '', redirectTo: 'tournaments', pathMatch: 'full' },
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard').then((m) => m.Dashboard),
+      },
     ],
   },
   { path: '**', redirectTo: 'auth/login' },
