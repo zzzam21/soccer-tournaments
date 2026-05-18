@@ -18,4 +18,5 @@ export const authReducer = createReducer<AuthState>(
     error,
   })),
   on(AuthActions.logout, () => initialAuthState),
+  on(AuthActions.clearError, (state) => ({ ...state, error: null })),
 );
