@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:20-alpine AS build-stage
 
 WORKDIR /app
 
@@ -6,9 +6,9 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 COPY . .
+RUN npm run build
 
-EXPOSE 4200
+FROM nginx:1.27-alpine
 
-# --host 0.0.0.0: requerido para exponer el puerto fuera del contenedor
-# --poll 500: habilita polling para hot-reload en Windows con Docker Desktop
-CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--poll", "500"]
+COPY --from=build-stage /app/dist/frontend/browser/ /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
