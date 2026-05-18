@@ -1,0 +1,29 @@
+@import 'variables';
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: $bg-elevated;
+  color: $text-secondary;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $primary;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+}
+
+.footer {
+  hr {
+    opacity: 1;
+  }
+
+  a {
+    transition: color 0.2s ease;
+  }
+}

@@ -1,0 +1,18 @@
+# compose.override.yml — desarrollo local
+# docker compose -f docker-compose.yml -f compose.override.yml up -d
+#
+# db:    expone puerto 5433 para conexión externa
+# backend:  hot-reload con volumen montado
+# frontend: usa el Dockerfile multi-stage de docker-compose.yml (sin cambios)
+
+services:
+
+  db:
+    ports:
+      - "5433:5432"
+
+  backend:
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app

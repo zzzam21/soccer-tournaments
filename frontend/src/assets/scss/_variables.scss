@@ -1,0 +1,163 @@
+// ── Bootstrap Overrides ──────────────────────────────────────
+$primary: #22C55E;
+$secondary: #0F172A;
+$success: #4ADE80;
+$info: #38BDF8;
+$warning: #FACC15;
+$danger: #EF4444;
+$light: #1E293B;
+$dark: #020617;
+
+$body-bg: #020617;
+$body-color: #CBD5E1;
+$headings-color: #F8FAFC;
+$headings-font-family: 'Poppins', sans-serif;
+
+$font-family-sans-serif: 'Inter', sans-serif;
+$font-family-base: 'Inter', sans-serif;
+
+$border-color: #1F2937;
+$border-radius: 14px;
+
+$link-color: #22C55E;
+$link-hover-color: #16A34A;
+
+// ── Cards ─────────────────────────────────────────────────────
+$card-bg: #111827;
+$card-border-color: #1F2937;
+$card-cap-bg: #111827;
+$card-color: #CBD5E1;
+
+// ── Inputs ────────────────────────────────────────────────────
+$input-bg: #1E293B;
+$input-color: #F8FAFC;
+$input-border-color: #334155;
+$input-placeholder-color: #94A3B8;
+$input-focus-border-color: #22C55E;
+$input-focus-box-shadow: 0 0 0 0.2rem rgba(#22C55E, 0.25);
+$input-disabled-bg: #111827;
+
+// ── Navbar ────────────────────────────────────────────────────
+$navbar-dark-color: #F8FAFC;
+$navbar-dark-hover-color: #22C55E;
+$navbar-dark-active-color: #22C55E;
+$navbar-dark-brand-color: #F8FAFC;
+$navbar-dark-brand-hover-color: #22C55E;
+$navbar-dark-toggler-border-color: #1F2937;
+
+// ── Tables ────────────────────────────────────────────────────
+$table-bg: transparent;
+$table-color: #E2E8F0;
+$table-border-color: #1F2937;
+$table-hover-bg: #1E293B;
+$table-hover-color: #F8FAFC;
+$table-striped-bg: rgba(#FFF, 0.02);
+$table-striped-color: #E2E8F0;
+$table-dark-bg: #0F172A;
+$table-dark-color: #F8FAFC;
+
+// ── Dropdowns ─────────────────────────────────────────────────
+$dropdown-bg: #111827;
+$dropdown-color: #CBD5E1;
+$dropdown-border-color: #1F2937;
+$dropdown-divider-bg: #1F2937;
+$dropdown-link-color: #CBD5E1;
+$dropdown-link-hover-color: #F8FAFC;
+$dropdown-link-hover-bg: #1F2937;
+$dropdown-link-active-color: #FFF;
+$dropdown-link-active-bg: #22C55E;
+$dropdown-header-color: #64748B;
+
+// ── Modals ────────────────────────────────────────────────────
+$modal-content-bg: #111827;
+$modal-content-border-color: #1F2937;
+$modal-header-border-color: #1F2937;
+$modal-footer-border-color: #1F2937;
+$modal-backdrop-bg: #020617;
+$modal-backdrop-opacity: 0.7;
+
+// ── Alerts ────────────────────────────────────────────────────
+$alert-bg-scale: -80%;
+$alert-border-scale: -70%;
+$alert-color-scale: 0%;
+
+// ── Navs / Tabs ───────────────────────────────────────────────
+$nav-tabs-border-color: #1F2937;
+$nav-tabs-link-hover-border-color: #22C55E;
+$nav-tabs-link-active-color: #22C55E;
+$nav-tabs-link-active-bg: #111827;
+$nav-tabs-link-active-border-color: #1F2937 #1F2937 #111827;
+
+// ── Pagination ────────────────────────────────────────────────
+$pagination-bg: #111827;
+$pagination-border-color: #1F2937;
+$pagination-color: #CBD5E1;
+$pagination-hover-bg: #1E293B;
+$pagination-hover-border-color: #334155;
+$pagination-hover-color: #F8FAFC;
+$pagination-focus-bg: #1E293B;
+$pagination-focus-box-shadow: 0 0 0 0.2rem rgba(#22C55E, 0.25);
+$pagination-active-bg: #22C55E;
+$pagination-active-border-color: #22C55E;
+$pagination-active-color: #FFF;
+$pagination-disabled-bg: #0F172A;
+$pagination-disabled-color: #64748B;
+
+// ── Progress ──────────────────────────────────────────────────
+$progress-bg: #1E293B;
+$progress-bar-bg: #22C55E;
+
+// ── List group ────────────────────────────────────────────────
+$list-group-bg: #111827;
+$list-group-border-color: #1F2937;
+$list-group-color: #CBD5E1;
+$list-group-hover-bg: #1E293B;
+$list-group-action-color: #CBD5E1;
+$list-group-action-hover-color: #F8FAFC;
+$list-group-action-active-bg: #1E293B;
+$list-group-action-active-color: #22C55E;
+
+// ── Close button ──────────────────────────────────────────────
+$btn-close-color: #CBD5E1;
+
+// ── Tooltip ───────────────────────────────────────────────────
+$tooltip-bg: #111827;
+$tooltip-color: #F8FAFC;
+
+// ── Custom Variables ──────────────────────────────────────────
+$primary-hover: #16A34A;
+$text-primary: #F8FAFC;
+$text-secondary: #CBD5E1;
+$text-muted: #64748B;
+$text-subtle: #94A3B8;
+$bg-body: #020617;
+$bg-surface: #111827;
+$bg-elevated: #1E293B;
+$bg-navbar: #0F172A;
+$bg-sidebar: #111827;
+$bg-input: #1E293B;
+$bg-card-hover: #1E293B;
+$border-default: #1F2937;
+$border-input: #334155;
+$border-navbar-bottom: #1E293B;
+
+$font-family-headings: 'Poppins', sans-serif;
+
+$state-live: #EF4444;
+$state-finished: #64748B;
+$state-upcoming: #38BDF8;
+$state-classified: #22C55E;
+$state-eliminated: #F59E0B;
+
+$btn-secondary-bg: #1E293B;
+$btn-secondary-hover-bg: #334155;
+$btn-secondary-color: #F8FAFC;
+
+$btn-danger-hover-bg: #DC2626;
+
+$gradient-hero: linear-gradient(135deg, #0F172A 0%, #111827 50%, #16A34A 100%);
+$gradient-button: linear-gradient(135deg, #22C55E, #16A34A);
+
+$shadow-default: 0 4px 20px rgba(0,0,0,0.25);
+$shadow-card: 0 4px 20px rgba(0,0,0,0.25);
+$shadow-card-hover: 0 8px 30px rgba(0,0,0,0.35);

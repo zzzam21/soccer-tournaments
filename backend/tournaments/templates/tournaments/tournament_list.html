@@ -1,0 +1,10 @@
+<h1>Tournaments</h1>
+{% for tournament in object_list %}
+  <h2>Torneo: {{ tournament.name }}</h2>
+  <ul>
+    <li>{{ tournament.city }}</li>
+    <li>{{ tournament.type }}</li>
+    <li>{{ tournament.status }}</li>
+    <li>{{ tournament.start_date }} to {{ tournament.end_date }}</li>
+  </ul>
+{% endfor %}

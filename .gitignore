@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.so
+
+# Virtual environment
+venv/
+env/
+.venv/
+.env/
+
+# Django
+*.sqlite3
+*.log
+local_settings.py
+media/
+staticfiles/
+static/
+
+# Environment variables
+.env
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Node / Frontend
+node_modules/
+.angular/
+frontend/src/client
+npm-debug.log*

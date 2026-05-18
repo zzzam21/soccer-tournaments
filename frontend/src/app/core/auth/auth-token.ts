@@ -1,0 +1,16 @@
+const TOKEN_KEY = 'auth_token';
+
+export const AuthToken = {
+  get(): string | null {
+    return localStorage.getItem(TOKEN_KEY);
+  },
+  set(token: string): void {
+    localStorage.setItem(TOKEN_KEY, token);
+  },
+  clear(): void {
+    localStorage.removeItem(TOKEN_KEY);
+  },
+  has(): boolean {
+    return !!localStorage.getItem(TOKEN_KEY);
+  },
+};
