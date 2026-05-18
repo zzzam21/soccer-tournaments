@@ -145,12 +145,154 @@ def _seed_players():
                 logger.info('Player created: %s (%s)', name, team_name)
 
 
+def _get_team(tournament_name, team_name):
+    try:
+        tournament = Tournament.objects.get(name=tournament_name)
+    except Tournament.DoesNotExist:
+        logger.warning('Tournament "%s" not found, skipping', tournament_name)
+        return None
+    teams = list(Team.objects.filter(name=team_name, tournament=tournament))
+    if not teams:
+        logger.warning('Team "%s" not found in "%s"', team_name, tournament_name)
+        return None
+    return teams[0]
+
+
+_MATCHES_SEED = {
+    'Copa Mundial FIFA 2026': [
+        {
+            'number': 1, 'start_date': date(2026, 6, 5), 'name': 'Fase de grupos',
+            'games': [
+                ('Argentina', 'Brasil', 2, 1, 'Finished'),
+                ('Colombia', 'Uruguay', 1, 1, 'Finished'),
+                ('Francia', 'España', 3, 0, 'Finished'),
+                ('Inglaterra', 'Alemania', 1, 2, 'Finished'),
+            ],
+        },
+        {
+            'number': 2, 'start_date': date(2026, 6, 20), 'name': 'Cuartos de final',
+            'games': [
+                ('Argentina', 'Colombia', 2, 0, 'Finished'),
+                ('Alemania', 'Francia', 1, 1, 'Finished'),
+            ],
+        },
+        {
+            'number': 3, 'start_date': date(2026, 7, 5), 'name': 'Semifinales',
+            'games': [
+                ('Argentina', 'Alemania', None, None, 'Scheduled'),
+                ('Francia', 'Brasil', None, None, 'Scheduled'),
+            ],
+        },
+    ],
+    'Liga Colombiana 2026': [
+        {
+            'number': 1, 'start_date': date(2026, 2, 10), 'name': 'Jornada 1',
+            'games': [
+                ('Atlético Nacional', 'Millonarios', 3, 2, 'Finished'),
+                ('América de Cali', 'Junior', 1, 0, 'Finished'),
+                ('Deportivo Cali', 'Independiente Medellín', 2, 2, 'Finished'),
+            ],
+        },
+        {
+            'number': 2, 'start_date': date(2026, 2, 25), 'name': 'Jornada 2',
+            'games': [
+                ('Millonarios', 'América de Cali', 1, 1, 'Finished'),
+                ('Junior', 'Deportivo Cali', 2, 0, 'Finished'),
+                ('Independiente Medellín', 'Atlético Nacional', None, None, 'Scheduled'),
+            ],
+        },
+    ],
+    'Eurocopa 2024': [
+        {
+            'number': 1, 'start_date': date(2024, 6, 16), 'name': 'Fase de grupos',
+            'games': [
+                ('España', 'Portugal', 3, 1, 'Finished'),
+                ('Inglaterra', 'Italia', 2, 0, 'Finished'),
+                ('Francia', 'Países Bajos', 1, 1, 'Finished'),
+                ('Alemania', 'Bélgica', 4, 2, 'Finished'),
+            ],
+        },
+        {
+            'number': 2, 'start_date': date(2024, 6, 28), 'name': 'Cuartos de final',
+            'games': [
+                ('España', 'Inglaterra', 2, 1, 'Finished'),
+                ('Francia', 'Alemania', 0, 0, 'Finished'),
+            ],
+        },
+        {
+            'number': 3, 'start_date': date(2024, 7, 5), 'name': 'Semifinales',
+            'games': [
+                ('España', 'Francia', 2, 0, 'Finished'),
+                ('Inglaterra', 'Alemania', 1, 1, 'Finished'),
+            ],
+        },
+        {
+            'number': 4, 'start_date': date(2024, 7, 14), 'name': 'Final',
+            'games': [
+                ('España', 'Inglaterra', 3, 2, 'Finished'),
+            ],
+        },
+    ],
+}
+
+
+def _seed_matches_and_games():
+    for tournament_name, match_days in _MATCHES_SEED.items():
+        try:
+            tournament = Tournament.objects.get(name=tournament_name)
+        except Tournament.DoesNotExist:
+            logger.warning('Tournament "%s" not found, skipping matches', tournament_name)
+            continue
+
+        for md in match_days:
+            match_obj, created = Match.objects.get_or_create(
+                number=md['number'],
+                tournament=tournament,
+                defaults={'start_date': md['start_date']},
+            )
+            if created:
+                logger.info('Match created: Jornada %s (%s)', md['number'], tournament_name)
+            elif match_obj.start_date != md['start_date']:
+                match_obj.start_date = md['start_date']
+                match_obj.save()
+
+            for local_name, visitant_name, local_goals, visitant_goals, status in md['games']:
+                local = _get_team(tournament_name, local_name)
+                visitant = _get_team(tournament_name, visitant_name)
+                if not local or not visitant:
+                    continue
+
+                defaults = {
+                    'status': status,
+                    'date': md['start_date'],
+                    'match': match_obj,
+                    'local_team': local,
+                    'visitant_team': visitant,
+                }
+                if local_goals is not None:
+                    defaults['local_goals'] = local_goals
+                    defaults['visitant_goals'] = visitant_goals
+                else:
+                    defaults['local_goals'] = 0
+                    defaults['visitant_goals'] = 0
+
+                _, created = Game.objects.get_or_create(
+                    match=match_obj,
+                    local_team=local,
+                    visitant_team=visitant,
+                    defaults=defaults,
+                )
+                if created:
+                    logger.info('Game created: %s vs %s (%s)', local_name, visitant_name, tournament_name)
+
+
 def main():
     logger.info('Creating initial data...')
     _ensure_superuser()
     _seed_tournaments()
     _seed_teams()
     _seed_players()
+    _seed_matches_and_games()
     logger.info('Initial data created successfully')
 
 

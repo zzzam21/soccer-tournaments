@@ -1675,6 +1675,32 @@
                     }
                 }
             }
+        },
+        "/api/utils/stats/": {
+            "get": {
+                "operationId": "utils_stats_retrieve",
+                "tags": [
+                    "utils"
+                ],
+                "security": [
+                    {
+                        "tokenAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Stats"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1969,6 +1995,45 @@
                 "required": [
                     "id",
                     "name"
+                ]
+            },
+            "Stats": {
+                "type": "object",
+                "properties": {
+                    "total_tournaments": {
+                        "type": "integer"
+                    },
+                    "total_teams": {
+                        "type": "integer"
+                    },
+                    "total_players": {
+                        "type": "integer"
+                    },
+                    "total_matches": {
+                        "type": "integer"
+                    },
+                    "total_games": {
+                        "type": "integer"
+                    },
+                    "total_goals": {
+                        "type": "integer"
+                    },
+                    "ongoing_tournaments": {
+                        "type": "integer"
+                    },
+                    "completed_tournaments": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "completed_tournaments",
+                    "ongoing_tournaments",
+                    "total_games",
+                    "total_goals",
+                    "total_matches",
+                    "total_players",
+                    "total_teams",
+                    "total_tournaments"
                 ]
             },
             "Team": {
