@@ -1,14 +1,13 @@
-import { Config } from 'ng-openapi';
+import { GeneratorConfig } from 'ng-openapi';
 
-const config: Config = {
+const config: GeneratorConfig = {
   input: './swagger.json',
   output: './src/client',
-  servicePrefix: 'Api',
-  serviceSuffix: 'Service',
-  responseSuffix: 'Response',
-  modelSuffix: '',
-  modelPrefix: '',
-  provider: 'root',
+  options: {
+    dateType: 'string',
+    enumStyle: 'enum',
+    generateServices: true,
+  },
 };
 
 export default config;
