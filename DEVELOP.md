@@ -37,6 +37,8 @@ Instrucciones completas para levantar el ambiente local, trabajar con el fronten
 
 ### Primera vez
 
+> **Nota:** `frontend/src/client/` es código generado. Si ya está commiteado en el repo, salta al paso 4 directamente.
+
 ```bash
 # 1. Clonar y entrar al proyecto
 git clone <repo-url> soccer-tournaments
@@ -46,26 +48,40 @@ cd soccer-tournaments
 cp .env.example .env
 # Editar .env si es necesario
 
-# 3. Instalar dependencias del frontend (node_modules está en .gitignore)
+# 3. Instalar dependencias del frontend (necesario para generar el cliente)
 cd frontend
 npm install
 cd ..
 
-# 4. Construir imágenes Docker
-docker compose build
+# 4. Construir e iniciar backend + base de datos primero
+docker compose build backend
+docker compose up -d db backend
 
-# 5. Levantar stack completo
+# 5. Esperar ~30 segundos a que el backend esté listo (migraciones + seed)
+curl http://localhost:8000/api/utils/health-check/
+# → {"status": "ok", "database": "connected"}
+
+# 6. Generar el cliente HTTP Angular desde el schema OpenAPI
+#    (en Windows usar Git Bash)
+bash scripts/generate-client.sh
+
+# 7. Construir el frontend (ahora que el cliente existe)
+docker compose build frontend
+
+# 8. Levantar el stack completo
 docker compose up -d
 
-# 6. Verificar que todo está funcionando
+# 9. Verificar que todo está funcionando
 curl http://localhost:8000/api/utils/health-check/
 # → {"status": "ok", "database": "connected"}
 
 curl http://localhost:4200
 # → HTML del frontend
 
-# 7. (Opcional) Generar cliente HTTP desde el schema
-bash scripts/generate-client.sh
+# 10. (Solo la primera vez) Commitear el cliente generado
+#     para que futuros clones no necesiten repetir estos pasos
+git add frontend/src/client/
+git commit -m "feat: cliente HTTP generado desde OpenAPI"
 ```
 
 ### Días siguientes (stack ya inicializado)
