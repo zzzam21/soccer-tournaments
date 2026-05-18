@@ -9,7 +9,7 @@ import { Team } from '../../store/Team/team.models';
 })
 export class TeamCardComponent {
   team = input.required<Team>();
-  tournamentName = input<string>('');
+  tournamentNames = input<string>('');
   onEdit = output<Team>();
   onDelete = output<Team>();
 }

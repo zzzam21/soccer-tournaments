@@ -1,0 +1,109 @@
+@import 'variables';
+
+.section-title {
+  color: $text-primary;
+  font-family: $font-family-headings;
+}
+
+.search-box {
+  position: relative;
+
+  .form-control {
+    border-radius: $border-radius;
+  }
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: $bg-elevated;
+  border: 1px solid $border-default;
+  border-radius: $border-radius;
+  margin-top: 4px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background: none;
+  border: none;
+  color: $text-primary;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: $bg-surface;
+  }
+}
+
+.search-result-empty {
+  padding: 0.6rem 0.75rem;
+  color: $text-muted;
+  font-size: 0.85rem;
+}
+
+.gradient-button {
+  background: $gradient-button;
+  border: none;
+  color: #fff;
+  white-space: nowrap;
+
+  &:hover { opacity: 0.9; }
+  &:disabled { opacity: 0.5; }
+}
+
+.team-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.team-item {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid $border-default;
+  border-radius: $border-radius;
+  margin-bottom: 0.4rem;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: $bg-elevated;
+  }
+}
+
+.team-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: $gradient-button;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.team-name {
+  color: $text-primary;
+  font-weight: 500;
+}
+
+.min-width-0 {
+  min-width: 0;
+}
+
+.btn-remove {
+  color: $text-muted;
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  line-height: 1;
+
+  &:hover {
+    color: $danger;
+  }
+}

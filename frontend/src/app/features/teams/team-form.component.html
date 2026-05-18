@@ -23,21 +23,23 @@
         </div>
 
         <div class="mb-4">
-          <label for="teamTournament" class="form-label">Torneo</label>
-          <select
-            id="teamTournament"
-            class="form-select"
-            formControlName="tournament"
-            [class.is-invalid]="isFieldInvalid('tournament')"
-          >
-            <option [value]="0" disabled>Seleccione un torneo</option>
+          <label class="form-label">Torneos</label>
+          <div class="tournament-checkboxes">
             @for (t of tournaments(); track t.id) {
-              <option [value]="t.id">{{ t.name }}</option>
+              <div class="form-check" (click)="toggleTournament(t.id)">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  [checked]="isSelected(t.id)"
+                  (click)="$event.stopPropagation()"
+                />
+                <label class="form-check-label">{{ t.name }}</label>
+              </div>
             }
-          </select>
-          @if (isFieldInvalid('tournament')) {
-            <div class="invalid-feedback">Debe seleccionar un torneo.</div>
-          }
+            @if (tournaments().length === 0) {
+              <p class="text-muted-custom small mb-0">No hay torneos disponibles.</p>
+            }
+          </div>
         </div>
 
         <div class="d-flex justify-content-end gap-2">

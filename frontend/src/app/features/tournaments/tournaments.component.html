@@ -1,0 +1,149 @@
+<div class="tournaments-page">
+  <header class="page-header d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Torneos</h1>
+      <p class="page-subtitle mb-0">Gestiona los torneos, equipos y posiciones</p>
+    </div>
+    <div class="d-flex gap-2">
+      @if (selectedTournament()) {
+        <button class="btn btn-secondary d-flex align-items-center gap-1" (click)="clearSelection()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+          </svg>
+          Volver
+        </button>
+      }
+      <button class="btn btn-primary gradient-button d-flex align-items-center gap-2" (click)="openCreateForm()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+        </svg>
+        Agregar Torneo
+      </button>
+    </div>
+  </header>
+
+  @if (error(); as err) {
+    <div class="alert alert-danger d-flex align-items-center gap-2 mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" class="flex-shrink-0">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+      </svg>
+      <div>{{ err }}</div>
+    </div>
+  }
+
+  @if (selectedTournament(); as sel) {
+    <div class="tournament-detail">
+      <div class="detail-header section-dark rounded-4 p-4 mb-4">
+        <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
+          <div>
+            <h2 class="detail-title mb-1">{{ sel.name }}</h2>
+            <div class="d-flex flex-wrap gap-3">
+              <small class="text-muted-custom d-flex align-items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                  <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                </svg>
+                {{ sel.city }}
+              </small>
+              <small class="text-muted-custom">{{ sel.type }}</small>
+              <small class="text-muted-custom">{{ sel.start_date }} — {{ sel.end_date }}</small>
+              <span class="badge" [class.badge-live]="sel.status === 'Ongoing'"
+                    [class.badge-finished]="sel.status === 'Completed'"
+                    [class.badge-upcoming]="sel.status === 'Upcoming'">
+                {{ sel.status }}
+              </span>
+            </div>
+          </div>
+          <div class="d-flex gap-1">
+            <button class="btn btn-sm btn-secondary" (click)="openEditForm(sel)">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="confirmDelete(sel)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-tabs d-flex gap-0 mb-3">
+        <button class="tab-btn" [class.active]="activeTab() === 'standings'" (click)="activeTab.set('standings')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="me-1">
+            <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm2.5 2a.5.5 0 0 0 0-1H1.5a.5.5 0 0 0 0 1zM1 7h2.5a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1m.5 1a.5.5 0 0 0 0 1h1.5a.5.5 0 0 0 0-1zM7 7h2.5a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1m.5 1a.5.5 0 0 0 0 1h1.5a.5.5 0 0 0 0-1z"/>
+          </svg>
+          Tabla de Posiciones
+        </button>
+        <button class="tab-btn" [class.active]="activeTab() === 'teams'" (click)="activeTab.set('teams')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="me-1">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+            <path d="M2 0a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1.5A.5.5 0 0 1 2.5 1h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+          </svg>
+          Equipos
+        </button>
+      </div>
+
+      @if (activeTab() === 'standings') {
+        <app-standings-table [standings]="standings()" [loading]="standingsLoading()" />
+      }
+      @if (activeTab() === 'teams') {
+        <app-team-manager
+          [tournamentTeams]="tournamentTeams()"
+          [allTeams]="allTeams()"
+          [loading]="tournamentTeamsLoading()"
+          (onAdd)="addTeam($event)"
+          (onRemove)="removeTeam($event)"
+        />
+      }
+    </div>
+  } @else {
+    @if (loading()) {
+      <div class="text-center py-5">
+        <div class="spinner-border text-primary mb-3" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="text-muted-custom">Cargando torneos...</p>
+      </div>
+    } @else if (tournaments().length === 0) {
+      <div class="empty-state text-center py-5 section-dark rounded-4">
+        <div class="empty-icon mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16" class="text-muted-custom">
+            <path d="M2 0a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1.5A.5.5 0 0 1 2.5 1h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+            <path d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5h5.5v-1h2v1H13.5zM11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+          </svg>
+        </div>
+        <h5 class="mb-2">No hay torneos</h5>
+        <p class="text-muted-custom mb-4">Comienza agregando tu primer torneo.</p>
+        <button class="btn btn-primary gradient-button" (click)="openCreateForm()">Agregar Torneo</button>
+      </div>
+    } @else {
+      <div class="row g-3">
+        @for (t of tournaments(); track trackById($index, t)) {
+          <div class="col-12 col-sm-6 col-lg-4">
+            <app-tournament-card
+              [tournament]="t"
+              [selected]="selectedTournament()?.id === t.id"
+              (onSelect)="selectTournament($event)"
+              (onEdit)="openEditForm($event)"
+              (onDelete)="confirmDelete($event)"
+            />
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
+
+@if (showForm()) {
+  <app-tournament-form
+    [saving]="saving()"
+    [editingTournament]="editingTournament()"
+    [title]="editingTournament() ? 'Editar Torneo' : 'Agregar Torneo'"
+    [submitLabel]="editingTournament() ? 'Actualizar' : 'Guardar'"
+    (onSave)="onSaveForm($event)"
+    (onCancel)="closeForm()"
+  />
+}
+
+@if (showDeleteDialog()) {
+  <app-confirm-delete
+    [tournamentName]="deletingTournament()?.name ?? ''"
+    [deleting]="deleting()"
+    (onConfirm)="executeDelete()"
+    (onCancel)="cancelDelete()"
+  />
+}

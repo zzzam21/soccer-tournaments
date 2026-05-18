@@ -119,10 +119,10 @@ def _seed_teams():
             logger.warning('Tournament "%s" not found, skipping teams', tournament_name)
             continue
         for name in team_names:
-            _, created = Team.objects.get_or_create(
+            team, created = Team.objects.get_or_create(
                 name=name,
-                tournament=tournament,
             )
+            team.tournaments.add(tournament)
             if created:
                 logger.info('Team created: %s (%s)', name, tournament_name)
 
@@ -151,7 +151,7 @@ def _get_team(tournament_name, team_name):
     except Tournament.DoesNotExist:
         logger.warning('Tournament "%s" not found, skipping', tournament_name)
         return None
-    teams = list(Team.objects.filter(name=team_name, tournament=tournament))
+    teams = list(Team.objects.filter(name=team_name, tournaments=tournament))
     if not teams:
         logger.warning('Team "%s" not found in "%s"', team_name, tournament_name)
         return None

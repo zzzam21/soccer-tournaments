@@ -1,0 +1,73 @@
+@import 'variables';
+
+.tournaments-page {
+  padding: 1.5rem;
+}
+
+.page-title {
+  font-family: $font-family-headings;
+  font-size: 1.75rem;
+  color: $text-primary;
+  margin: 0;
+}
+
+.page-subtitle {
+  color: $text-muted;
+  font-size: 0.9rem;
+}
+
+.gradient-button {
+  background: $gradient-button;
+  border: none;
+  color: #fff;
+
+  &:hover { opacity: 0.9; }
+}
+
+.empty-state {
+  border: 1px dashed $border-default;
+}
+
+.empty-icon {
+  opacity: 0.5;
+}
+
+// ── Detail ───────────────────────────────────────────────
+.detail-header {
+  border: 1px solid $border-default;
+}
+
+.detail-title {
+  font-family: $font-family-headings;
+  color: $text-primary;
+}
+
+// ── Tabs ─────────────────────────────────────────────────
+.detail-tabs {
+  border-bottom: 1px solid $border-default;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  color: $text-muted;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: $text-primary;
+    background: rgba($primary, 0.03);
+  }
+
+  &.active {
+    color: $primary;
+    border-bottom-color: $primary;
+  }
+}

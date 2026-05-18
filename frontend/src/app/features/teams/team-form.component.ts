@@ -19,21 +19,37 @@ export class TeamFormComponent {
   title = input('Agregar Equipo');
   submitLabel = input('Guardar');
 
-  onSave = output<{ name: string; tournament: number }>();
+  onSave = output<{ name: string; tournaments: number[] }>();
   onCancel = output<void>();
 
   form = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(255)]],
-    tournament: [0, [Validators.required, Validators.min(1)]],
+    tournaments: [[] as number[]],
   });
 
   constructor() {
     effect(() => {
       const team = this.editingTeam();
       if (team) {
-        this.form.patchValue({ name: team.name, tournament: team.tournament });
+        this.form.patchValue({ name: team.name, tournaments: team.tournaments ?? [] });
       }
     });
+  }
+
+  toggleTournament(tournamentId: number): void {
+    const current = this.form.get('tournaments')?.value ?? [];
+    if (Array.isArray(current)) {
+      if (current.includes(tournamentId)) {
+        this.form.patchValue({ tournaments: current.filter((id) => id !== tournamentId) });
+      } else {
+        this.form.patchValue({ tournaments: [...current, tournamentId] });
+      }
+    }
+  }
+
+  isSelected(tournamentId: number): boolean {
+    const current = this.form.get('tournaments')?.value;
+    return Array.isArray(current) && current.includes(tournamentId);
   }
 
   isFieldInvalid(field: string): boolean {
@@ -43,8 +59,8 @@ export class TeamFormComponent {
 
   submit(): void {
     if (this.form.invalid) return;
-    const { name, tournament } = this.form.value;
-    this.onSave.emit({ name: name!, tournament: tournament! });
+    const { name, tournaments } = this.form.value;
+    this.onSave.emit({ name: name!, tournaments: tournaments ?? [] });
   }
 
   cancel(): void {

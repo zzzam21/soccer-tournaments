@@ -2028,8 +2028,11 @@
                         "type": "string",
                         "maxLength": 255
                     },
-                    "tournament": {
-                        "type": "integer"
+                    "tournaments": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
                     }
                 }
             },
@@ -2142,14 +2145,16 @@
                         "type": "string",
                         "maxLength": 255
                     },
-                    "tournament": {
-                        "type": "integer"
+                    "tournaments": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
                     }
                 },
                 "required": [
                     "id",
-                    "name",
-                    "tournament"
+                    "name"
                 ]
             },
             "Tournament": {

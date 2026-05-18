@@ -1,0 +1,59 @@
+<div class="standings-wrapper">
+  <h5 class="section-title mb-3">Tabla de Posiciones</h5>
+
+  @if (loading()) {
+    <div class="text-center py-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted-custom mt-2 mb-0">Calculando estadísticas...</p>
+    </div>
+  } @else if (standings().length === 0) {
+    <div class="text-center py-4 section-dark rounded-3">
+      <p class="text-muted-custom mb-0">No hay datos de partidos para mostrar posiciones.</p>
+    </div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table standings-table mb-0">
+        <thead>
+          <tr>
+            <th class="col-pos">#</th>
+            <th class="col-team">Equipo</th>
+            <th class="col-num">PJ</th>
+            <th class="col-num">PG</th>
+            <th class="col-num">PE</th>
+            <th class="col-num">PP</th>
+            <th class="col-num">GF</th>
+            <th class="col-num">GC</th>
+            <th class="col-num">DG</th>
+            <th class="col-num col-pts">PTS</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (s of standings(); track s.teamId; let i = $index) {
+            <tr [class.top-row]="i < 3" [class.champion-row]="i === 0">
+              <td class="col-pos">
+                <span class="position-badge {{ positionClass(i) }}">{{ positionLabel(i) }}</span>
+              </td>
+              <td class="col-team">
+                <span class="team-name">{{ s.teamName }}</span>
+              </td>
+              <td class="col-num">{{ s.pj }}</td>
+              <td class="col-num">{{ s.pg }}</td>
+              <td class="col-num">{{ s.pe }}</td>
+              <td class="col-num">{{ s.pp }}</td>
+              <td class="col-num">{{ s.gf }}</td>
+              <td class="col-num">{{ s.gc }}</td>
+              <td class="col-num" [class.dg-positive]="s.dg > 0" [class.dg-negative]="s.dg < 0">
+                {{ s.dg > 0 ? '+' : '' }}{{ s.dg }}
+              </td>
+              <td class="col-num col-pts">
+                <strong>{{ s.pts }}</strong>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
