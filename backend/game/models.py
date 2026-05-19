@@ -9,6 +9,7 @@ class Game(models.Model):
     visitant_goals = models.IntegerField()
     status = models.CharField(max_length=20)
     date = models.DateField()
+    start_time = models.TimeField(null=True, blank=True)
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     local_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='local_games')
     visitant_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='visitant_games')
