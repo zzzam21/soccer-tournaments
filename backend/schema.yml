@@ -1,0 +1,1418 @@
+openapi: 3.0.3
+info:
+  title: Soccer Tournaments API
+  version: 1.0.0
+  description: API de gestión de torneos de fútbol
+paths:
+  /api/auth/register/:
+    post:
+      operationId: auth_register_create
+      tags:
+      - auth
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/auth/token/:
+    post:
+      operationId: auth_token_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+  /api/gameevents/:
+    get:
+      operationId: gameevents_list
+      tags:
+      - gameevents
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameEvent'
+          description: ''
+    post:
+      operationId: gameevents_create
+      tags:
+      - gameevents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameEvent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GameEvent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GameEvent'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameEvent'
+          description: ''
+  /api/gameevents/{id}/:
+    get:
+      operationId: gameevents_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - gameevents
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameEvent'
+          description: ''
+    put:
+      operationId: gameevents_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - gameevents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameEvent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GameEvent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GameEvent'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameEvent'
+          description: ''
+    patch:
+      operationId: gameevents_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - gameevents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGameEvent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGameEvent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGameEvent'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameEvent'
+          description: ''
+    delete:
+      operationId: gameevents_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - gameevents
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/games/:
+    get:
+      operationId: games_list
+      tags:
+      - games
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+          description: ''
+    post:
+      operationId: games_create
+      tags:
+      - games
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Game'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Game'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+          description: ''
+  /api/games/{id}/:
+    get:
+      operationId: games_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - games
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+          description: ''
+    put:
+      operationId: games_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - games
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Game'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Game'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+          description: ''
+    patch:
+      operationId: games_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - games
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGame'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGame'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGame'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+          description: ''
+    delete:
+      operationId: games_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - games
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/matches/:
+    get:
+      operationId: matches_list
+      tags:
+      - matches
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Match'
+          description: ''
+    post:
+      operationId: matches_create
+      tags:
+      - matches
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Match'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Match'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Match'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+          description: ''
+  /api/matches/{id}/:
+    get:
+      operationId: matches_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - matches
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+          description: ''
+    put:
+      operationId: matches_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - matches
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Match'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Match'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Match'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+          description: ''
+    patch:
+      operationId: matches_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - matches
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMatch'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMatch'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMatch'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+          description: ''
+    delete:
+      operationId: matches_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - matches
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/players/:
+    get:
+      operationId: players_list
+      tags:
+      - players
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Player'
+          description: ''
+    post:
+      operationId: players_create
+      tags:
+      - players
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Player'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Player'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Player'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+          description: ''
+  /api/players/{id}/:
+    get:
+      operationId: players_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - players
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+          description: ''
+    put:
+      operationId: players_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - players
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Player'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Player'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Player'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+          description: ''
+    patch:
+      operationId: players_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - players
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPlayer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPlayer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPlayer'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+          description: ''
+    delete:
+      operationId: players_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - players
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/teams/:
+    get:
+      operationId: teams_list
+      tags:
+      - teams
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+          description: ''
+    post:
+      operationId: teams_create
+      tags:
+      - teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Team'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Team'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+  /api/teams/{id}/:
+    get:
+      operationId: teams_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - teams
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+    put:
+      operationId: teams_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Team'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Team'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+    patch:
+      operationId: teams_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - teams
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTeam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTeam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTeam'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+    delete:
+      operationId: teams_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - teams
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/tournaments/:
+    get:
+      operationId: tournaments_list
+      tags:
+      - tournaments
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tournament'
+          description: ''
+    post:
+      operationId: tournaments_create
+      tags:
+      - tournaments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tournament'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tournament'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tournament'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tournament'
+          description: ''
+  /api/tournaments/{id}/:
+    get:
+      operationId: tournaments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tournaments
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tournament'
+          description: ''
+    put:
+      operationId: tournaments_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tournaments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tournament'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tournament'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tournament'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tournament'
+          description: ''
+    patch:
+      operationId: tournaments_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tournaments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTournament'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTournament'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTournament'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tournament'
+          description: ''
+    delete:
+      operationId: tournaments_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tournaments
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/utils/contact/:
+    post:
+      operationId: utils_contact_create
+      tags:
+      - utils
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Contact'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Contact'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          description: No response body
+  /api/utils/stats/:
+    get:
+      operationId: utils_stats_retrieve
+      tags:
+      - utils
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stats'
+          description: ''
+components:
+  schemas:
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - password
+      - token
+      - username
+    Contact:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        email:
+          type: string
+          format: email
+        subject:
+          type: string
+          maxLength: 200
+        message:
+          type: string
+      required:
+      - email
+      - message
+      - name
+      - subject
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        local_goals:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        visitant_goals:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        status:
+          type: string
+          maxLength: 20
+        date:
+          type: string
+          format: date
+        start_time:
+          type: string
+          format: time
+          nullable: true
+        match:
+          type: integer
+        local_team:
+          type: integer
+        visitant_team:
+          type: integer
+      required:
+      - date
+      - id
+      - local_goals
+      - local_team
+      - match
+      - status
+      - visitant_goals
+      - visitant_team
+    GameEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        typeEvent:
+          type: string
+          maxLength: 50
+        minute:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        game:
+          type: integer
+        player:
+          type: integer
+      required:
+      - game
+      - id
+      - minute
+      - player
+      - typeEvent
+    Match:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        number:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        start_date:
+          type: string
+          format: date
+        tournament:
+          type: integer
+      required:
+      - id
+      - number
+      - start_date
+      - tournament
+    PatchedGame:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        local_goals:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        visitant_goals:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        status:
+          type: string
+          maxLength: 20
+        date:
+          type: string
+          format: date
+        start_time:
+          type: string
+          format: time
+          nullable: true
+        match:
+          type: integer
+        local_team:
+          type: integer
+        visitant_team:
+          type: integer
+    PatchedGameEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        typeEvent:
+          type: string
+          maxLength: 50
+        minute:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        game:
+          type: integer
+        player:
+          type: integer
+    PatchedMatch:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        number:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        start_date:
+          type: string
+          format: date
+        tournament:
+          type: integer
+    PatchedPlayer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        photo:
+          type: string
+          format: uri
+          maxLength: 500
+        team:
+          type: integer
+          nullable: true
+    PatchedTeam:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        tournaments:
+          type: array
+          items:
+            type: integer
+    PatchedTournament:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        city:
+          type: string
+          maxLength: 100
+        type:
+          type: string
+          maxLength: 50
+        status:
+          type: string
+          maxLength: 20
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+    Player:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        photo:
+          type: string
+          format: uri
+          maxLength: 500
+        team:
+          type: integer
+          nullable: true
+      required:
+      - id
+      - name
+    Stats:
+      type: object
+      properties:
+        total_tournaments:
+          type: integer
+        total_teams:
+          type: integer
+        total_players:
+          type: integer
+        total_matches:
+          type: integer
+        total_games:
+          type: integer
+        total_goals:
+          type: integer
+        ongoing_tournaments:
+          type: integer
+        completed_tournaments:
+          type: integer
+      required:
+      - completed_tournaments
+      - ongoing_tournaments
+      - total_games
+      - total_goals
+      - total_matches
+      - total_players
+      - total_teams
+      - total_tournaments
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        tournaments:
+          type: array
+          items:
+            type: integer
+      required:
+      - id
+      - name
+    Tournament:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        city:
+          type: string
+          maxLength: 100
+        type:
+          type: string
+          maxLength: 50
+        status:
+          type: string
+          maxLength: 20
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+      required:
+      - city
+      - end_date
+      - id
+      - name
+      - start_date
+      - status
+      - type
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

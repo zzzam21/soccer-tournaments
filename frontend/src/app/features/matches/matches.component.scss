@@ -1,0 +1,237 @@
+@import 'variables';
+
+.matches-page {
+  max-width: 900px;
+}
+
+// ── Header ──────────────────────────────────────────────
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-family: $headings-font-family;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 0.25rem;
+}
+
+.page-subtitle {
+  font-size: 0.875rem;
+  color: $text-muted;
+  margin: 0;
+}
+
+// ── Tournament Selector ─────────────────────────────────
+.tournament-selector {
+  border: 1px solid $border-default;
+
+  :host ::ng-deep .form-select {
+    background-color: $bg-elevated;
+    border: 1px solid $border-default;
+    color: $text-primary;
+    border-radius: 10px;
+    padding: 0.55rem 0.85rem;
+    cursor: pointer;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 2px rgba($primary, 0.15);
+    }
+  }
+}
+
+// ── Section ─────────────────────────────────────────────
+.section-title {
+  font-family: $headings-font-family;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: 1rem;
+}
+
+// ── Match Card ──────────────────────────────────────────
+.matches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.match-card {
+  border: 1px solid $border-default;
+  overflow: hidden;
+  transition: border-color 0.25s ease;
+
+  &:hover {
+    border-color: $primary;
+  }
+}
+
+.match-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  gap: 1rem;
+}
+
+.match-info {
+  min-width: 0;
+}
+
+.match-number-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background-color: rgba($primary, 0.1);
+  color: $primary;
+  flex-shrink: 0;
+
+  .match-number {
+    font-family: $headings-font-family;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  small {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+  }
+}
+
+.match-date {
+  font-size: 0.9rem;
+  color: $text-secondary;
+}
+
+.match-actions {
+  flex-shrink: 0;
+
+  .expand-icon {
+    color: $text-muted;
+    transition: transform 0.25s ease;
+    margin-left: 0.25rem;
+
+    &.expanded {
+      transform: rotate(45deg);
+      color: $primary;
+    }
+  }
+}
+
+// ── Games Section ───────────────────────────────────────
+.match-games {
+  padding: 0 1.25rem 1rem;
+}
+
+.games-divider {
+  height: 1px;
+  background-color: $border-default;
+  margin-bottom: 0.75rem;
+}
+
+.games-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.game-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.85rem;
+  background-color: $bg-elevated;
+  border-radius: 10px;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.game-teams {
+  min-width: 0;
+}
+
+.team-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: $text-primary;
+}
+
+.vs-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.game-meta {
+  flex-shrink: 0;
+}
+
+.game-status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  background-color: rgba($text-muted, 0.1);
+  color: $text-muted;
+}
+
+// ── Add Game Form ──────────────────────────────────────
+.add-game-row {
+  padding: 0.6rem 0.85rem;
+  background-color: $bg-elevated;
+  border-radius: 10px;
+}
+
+.team-select {
+  width: auto;
+  min-width: 140px;
+  background-color: $bg-surface;
+  border: 1px solid $border-default;
+  color: $text-primary;
+  border-radius: 8px;
+  font-size: 0.8rem;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 2px rgba($primary, 0.15);
+  }
+}
+
+.time-input {
+  width: auto;
+  min-width: 130px;
+  background-color: $bg-surface;
+  border: 1px solid $border-default;
+  color: $text-primary;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.6rem;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 2px rgba($primary, 0.15);
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(0.7);
+    cursor: pointer;
+  }
+}
+
+// ── Empty State ─────────────────────────────────────────
+.empty-icon {
+  opacity: 0.6;
+}

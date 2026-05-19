@@ -33,7 +33,6 @@ export class TopbarComponent {
   }
 
   logout(): void {
-    this.closeDropdown();
     this.store.dispatch(AuthActions.logout());
   }
 }

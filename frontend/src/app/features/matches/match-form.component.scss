@@ -1,0 +1,65 @@
+@import 'variables';
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 1rem;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid $border-default;
+  box-shadow: $shadow-default;
+}
+
+.modal-title {
+  font-family: $headings-font-family;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.btn-close-custom {
+  background: none;
+  border: none;
+  color: $text-muted;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  border-radius: 6px;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+:host ::ng-deep .form-control {
+  background-color: $bg-elevated;
+  border: 1px solid $border-default;
+  color: $text-primary;
+  border-radius: 10px;
+  padding: 0.6rem 0.85rem;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 2px rgba($primary, 0.15);
+  }
+
+  &::placeholder {
+    color: $text-muted;
+  }
+}
+
+:host ::ng-deep .form-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: $text-secondary;
+  margin-bottom: 0.35rem;
+}
