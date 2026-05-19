@@ -1,0 +1,297 @@
+@import 'variables';
+
+.games-page {
+  .page-title {
+    font-family: $headings-font-family;
+    font-weight: 700;
+    color: $text-primary;
+    font-size: 1.5rem;
+  }
+
+  .page-subtitle {
+    color: $text-muted;
+    font-size: 0.9rem;
+  }
+}
+
+.section-dark {
+  background: $bg-surface;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tournament-selector {
+  .form-select {
+    background-color: $bg-elevated;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: $text-primary;
+    font-size: 0.9rem;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 2px rgba($primary, 0.15);
+    }
+  }
+}
+
+.game-card {
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba($primary, 0.2);
+  }
+
+  &.game-expanded {
+    border-color: rgba($primary, 0.3);
+  }
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  user-select: none;
+
+  .game-match-info {
+    min-width: 80px;
+  }
+
+  .match-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    background: $bg-elevated;
+    color: $text-muted;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .game-teams {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .team-name {
+    font-weight: 600;
+    color: $text-primary;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+
+  .score {
+    font-family: $headings-font-family;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: $text-primary;
+    min-width: 60px;
+    text-align: center;
+
+    &.score-live {
+      color: $state-live;
+      animation: pulse-score 1.5s infinite;
+    }
+  }
+
+  .game-meta {
+    min-width: 200px;
+    justify-content: flex-end;
+  }
+
+  .game-datetime {
+    color: $text-muted;
+    font-size: 0.8rem;
+  }
+
+  .game-status-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: $bg-elevated;
+    color: $text-muted;
+
+    &.badge-live {
+      background: rgba($state-live, 0.15);
+      color: $state-live;
+    }
+
+    &.badge-finished {
+      background: rgba($primary, 0.15);
+      color: $primary;
+    }
+
+    &.badge-upcoming {
+      background: rgba($state-upcoming, 0.15);
+      color: $state-upcoming;
+    }
+
+    &.badge-half {
+      background: rgba($warning, 0.15);
+      color: $warning;
+    }
+  }
+
+  .expand-icon {
+    color: $text-muted;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+
+    &.expanded {
+      transform: rotate(45deg);
+      color: $primary;
+    }
+  }
+}
+
+.game-body {
+  padding: 0 1.25rem 1rem 1.25rem;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin-bottom: 1rem;
+}
+
+.game-controls {
+  .gradient-button {
+    background: $gradient-hero;
+    border: none;
+    color: $text-primary;
+    font-weight: 600;
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+  }
+}
+
+.events-section {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 0.75rem;
+}
+
+.events-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.events-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.85rem;
+
+  .event-icon {
+    font-size: 1rem;
+  }
+
+  .event-minute {
+    font-weight: 700;
+    color: $primary;
+    min-width: 30px;
+  }
+
+  .event-type {
+    color: $text-secondary;
+    min-width: 90px;
+  }
+
+  .event-player {
+    color: $text-primary;
+    flex: 1;
+  }
+
+  .event-delete {
+    padding: 0 0.25rem;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  &:hover .event-delete {
+    opacity: 1;
+  }
+}
+
+.add-event-form {
+  margin-top: 0.5rem;
+}
+
+.add-event-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: $text-muted;
+  margin-bottom: 0.5rem;
+}
+
+.add-event-row {
+  .event-select {
+    background-color: $bg-elevated;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: $text-primary;
+    font-size: 0.8rem;
+    max-width: 140px;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 2px rgba($primary, 0.15);
+    }
+  }
+
+  .minute-input {
+    background-color: $bg-elevated;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: $text-primary;
+    font-size: 0.8rem;
+    max-width: 65px;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 2px rgba($primary, 0.15);
+    }
+  }
+}
+
+.empty-state {
+  .empty-icon {
+    opacity: 0.5;
+  }
+
+  h5 {
+    color: $text-secondary;
+  }
+}
+
+@keyframes pulse-score {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}

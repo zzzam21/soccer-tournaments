@@ -93,4 +93,16 @@ export class AuthenticationEffects {
       ),
     { dispatch: false },
   );
+
+  logout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.logout),
+        tap(() => {
+          AuthToken.clear();
+          this.router.navigate(['/']);
+        }),
+      ),
+    { dispatch: false },
+  );
 }

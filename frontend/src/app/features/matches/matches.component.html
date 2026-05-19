@@ -1,0 +1,227 @@
+<div class="matches-page">
+  <header class="page-header d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Jornadas</h1>
+      <p class="page-subtitle mb-0">Organiza las jornadas y asigna los enfrentamientos</p>
+    </div>
+    <div class="d-flex gap-2">
+      <button
+        class="btn btn-primary gradient-button d-flex align-items-center gap-2"
+        (click)="openCreateForm()"
+        [disabled]="!selectedTournamentId()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+        </svg>
+        Agregar Jornada
+      </button>
+    </div>
+  </header>
+
+  @if (error(); as err) {
+    <div class="alert alert-danger d-flex align-items-center gap-2 mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" class="flex-shrink-0">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+      </svg>
+      <div>{{ err }}</div>
+    </div>
+  }
+
+  <!-- Tournament selector -->
+  <div class="tournament-selector section-dark rounded-4 p-3 mb-4">
+    <div class="row g-2 align-items-center">
+      <div class="col-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="text-muted-custom">
+          <path d="M2.5 2.5A.5.5 0 0 1 3 2h10a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5v-7Zm-2 11a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5Z"/>
+        </svg>
+      </div>
+      <div class="col">
+        <select
+          class="form-select"
+          [value]="selectedTournamentId() ?? ''"
+          (change)="selectTournament($any($event.target).value)"
+        >
+          <option value="" disabled>Seleccionar torneo</option>
+          @for (t of tournaments(); track t.id) {
+            <option [value]="t.id">{{ t.name }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matches list -->
+  @if (selectedTournamentId()) {
+    <h2 class="section-title d-flex align-items-center gap-2">
+      <span>{{ selectedTournamentName() }}</span>
+      <span class="badge badge-finished">{{ filteredMatches().length }} jornada(s)</span>
+    </h2>
+
+    @if (loading()) {
+      <div class="text-center py-5">
+        <div class="spinner-border text-primary mb-3" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="text-muted-custom">Cargando jornadas...</p>
+      </div>
+    } @else if (filteredMatches().length === 0) {
+      <div class="empty-state text-center py-5 section-dark rounded-4">
+        <div class="empty-icon mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16" class="text-muted-custom">
+            <path d="M14 2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2zM4 1h8a1 1 0 0 1 1 1v10H3V2a1 1 0 0 1 1-1z"/>
+          </svg>
+        </div>
+        <h5 class="mb-2">No hay jornadas</h5>
+        <p class="text-muted-custom mb-4">Este torneo aún no tiene jornadas programadas.</p>
+        <button class="btn btn-primary gradient-button" (click)="openCreateForm()">Agregar Jornada</button>
+      </div>
+    } @else {
+      <div class="matches-list">
+        @for (m of filteredMatches(); track trackById($index, m)) {
+          <div class="match-card section-dark rounded-4">
+            <div class="match-header" (click)="toggleExpand(m.id)">
+              <div class="match-info d-flex align-items-center gap-3">
+                <div class="match-number-badge">
+                  <span class="match-number">{{ m.number }}</span>
+                  <small>Jornada</small>
+                </div>
+                <div>
+                  <div class="match-date d-flex align-items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"/>
+                    </svg>
+                    {{ m.start_date }}
+                  </div>
+                </div>
+              </div>
+              <div class="match-actions d-flex align-items-center gap-1">
+                <button class="btn btn-sm btn-secondary" (click)="$event.stopPropagation(); openEditForm(m)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10z"/>
+                  </svg>
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="$event.stopPropagation(); deleteMatch(m)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1z"/>
+                  </svg>
+                </button>
+                <svg
+                  class="expand-icon"
+                  [class.expanded]="expandedMatchId() === m.id"
+                  xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"
+                >
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+              </div>
+            </div>
+
+            @if (expandedMatchId() === m.id) {
+              <div class="match-games">
+                <div class="games-divider"></div>
+
+                <div class="games-list">
+                  @if (getGamesForMatch(m.id).length === 0 && !gamesLoading()) {
+                    <div class="text-center py-3">
+                      <p class="text-muted-custom mb-0">No hay partidos en esta jornada</p>
+                    </div>
+                  }
+
+                  @if (gamesLoading()) {
+                    <div class="text-center py-3">
+                      <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                    </div>
+                  }
+
+                  @for (g of getGamesForMatch(m.id); track g.id) {
+                    <div class="game-row">
+                      <div class="game-teams d-flex align-items-center gap-2 flex-wrap">
+                        <span class="team-name">{{ getTeamName(g.local_team) }}</span>
+                        <span class="vs-badge">vs</span>
+                        <span class="team-name">{{ getTeamName(g.visitant_team) }}</span>
+                      </div>
+                      <div class="game-meta d-flex align-items-center gap-3">
+                        <span class="game-status" [class.badge-live]="g.status === 'Ongoing'"
+                              [class.badge-finished]="g.status === 'Finished'"
+                              [class.badge-upcoming]="g.status === 'Scheduled'">
+                          {{ g.status }}
+                        </span>
+                        <button class="btn btn-sm btn-danger" (click)="removeGame(g.id, m.id)">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <!-- Add game form -->
+                <div class="add-game-form">
+                  <div class="games-divider"></div>
+                  @if (gameError(); as err) {
+                    <div class="alert alert-danger py-2 px-3 mb-2 small d-flex align-items-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="flex-shrink-0">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                      </svg>
+                      <span>{{ err }}</span>
+                    </div>
+                  }
+                  <div class="add-game-row d-flex align-items-center gap-2 flex-wrap">
+                    <select #localTeam class="form-select form-select-sm team-select">
+                      <option value="" disabled selected>Local</option>
+                      @for (t of selectedTournamentTeams(); track t.id) {
+                        <option [value]="t.id">{{ t.name }}</option>
+                      }
+                    </select>
+                    <span class="vs-badge">vs</span>
+                    <select #visitantTeam class="form-select form-select-sm team-select">
+                      <option value="" disabled selected>Visitante</option>
+                      @for (t of selectedTournamentTeams(); track t.id) {
+                        <option [value]="t.id">{{ t.name }}</option>
+                      }
+                    </select>
+                    <input
+                      #gameTime
+                      type="time"
+                      class="form-control form-control-sm time-input"
+                    />
+                    <button
+                      class="btn btn-sm btn-primary gradient-button"
+                      [disabled]="gamesLoading()"
+                      (click)="addGame(m.id, localTeam.value, visitantTeam.value, gameTime.value); localTeam.value=''; visitantTeam.value=''; gameTime.value=''"
+                    >
+                      Agregar Partido
+                    </button>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  } @else {
+    <div class="empty-state text-center py-5 section-dark rounded-4">
+      <div class="empty-icon mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16" class="text-muted-custom">
+          <path d="M2.5 2.5A.5.5 0 0 1 3 2h10a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5v-7Zm-2 11a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5Z"/>
+        </svg>
+      </div>
+      <h5 class="mb-2">Selecciona un torneo</h5>
+      <p class="text-muted-custom mb-0">Elige un torneo del listado para ver sus jornadas.</p>
+    </div>
+  }
+</div>
+
+@if (showMatchForm()) {
+  <app-match-form
+    [saving]="creating()"
+    [editingMatch]="editingMatch()"
+    [minDate]="minNewMatchDate()"
+    [title]="editingMatch() ? 'Editar Jornada' : 'Agregar Jornada'"
+    [submitLabel]="editingMatch() ? 'Actualizar' : 'Guardar'"
+    (onSave)="onSaveForm($event)"
+    (onCancel)="closeForm()"
+  />
+}

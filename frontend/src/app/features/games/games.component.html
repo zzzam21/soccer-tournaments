@@ -1,0 +1,238 @@
+<div class="games-page">
+  <header class="page-header d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+    <div>
+      <h1 class="page-title">Partidos</h1>
+      <p class="page-subtitle mb-0">Gestiona los partidos, controla el tiempo y registra los eventos</p>
+    </div>
+  </header>
+
+  <!-- Tournament selector -->
+  <div class="tournament-selector section-dark rounded-4 p-3 mb-4">
+    <div class="row g-2 align-items-center">
+      <div class="col-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="text-muted-custom">
+          <path d="M2.5 2.5A.5.5 0 0 1 3 2h10a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5v-7Zm-2 11a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5Z"/>
+        </svg>
+      </div>
+      <div class="col">
+        <select
+          class="form-select"
+          [value]="selectedTournamentId() ?? ''"
+          (change)="selectTournament($any($event.target).value)"
+        >
+          <option value="" disabled>Seleccionar torneo</option>
+          @for (t of tournaments(); track t.id) {
+            <option [value]="t.id">{{ t.name }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matchday selector -->
+  @if (selectedTournamentId() && tournamentMatches().length > 0) {
+    <div class="matchday-selector section-dark rounded-4 p-3 mb-4">
+      <div class="row g-2 align-items-center">
+        <div class="col-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="text-muted-custom">
+            <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5h2V1H6.5A.5.5 0 0 1 6 .5z"/>
+            <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1h-.5a.5.5 0 0 1-.5-.5zM2 3a2 2 0 0 0-2 2v1h16V5a2 2 0 0 0-2-2H2zm14 4H0v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/>
+          </svg>
+        </div>
+        <div class="col">
+          <select
+            class="form-select"
+            [value]="selectedMatchId() ?? ''"
+            (change)="selectMatch($any($event.target).value)"
+          >
+            <option value="">Todas las jornadas</option>
+            @for (m of tournamentMatches(); track m.id) {
+              <option [value]="m.id">Jornada {{ m.number }} — {{ m.start_date }}</option>
+            }
+          </select>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Games list -->
+  @if (selectedTournamentId()) {
+    @if (loading()) {
+      <div class="text-center py-5">
+        <div class="spinner-border text-primary mb-3" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="text-muted-custom">Cargando partidos...</p>
+      </div>
+    } @else if (filteredGames().length === 0) {
+      <div class="empty-state text-center py-5 section-dark rounded-4">
+        <div class="empty-icon mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16" class="text-muted-custom">
+            <path d="M14 2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2zM4 1h8a1 1 0 0 1 1 1v10H3V2a1 1 0 0 1 1-1z"/>
+          </svg>
+        </div>
+        <h5 class="mb-2">No hay partidos</h5>
+        <p class="text-muted-custom mb-0">Este torneo aún no tiene partidos programados. Créalos desde la sección Jornadas.</p>
+      </div>
+    } @else {
+      <div class="games-list">
+        @for (g of filteredGames(); track trackById($index, g)) {
+          <div class="game-card section-dark rounded-4" [class.game-expanded]="expandedGameId() === g.id">
+            <div class="game-header" (click)="toggleExpand(g.id)">
+              <div class="game-match-info">
+                <small class="match-badge">{{ getMatchNumber(g.match) }} · {{ g.date }}</small>
+              </div>
+
+              <div class="game-teams">
+                <span class="team-name">{{ getTeamName(g.local_team) }}</span>
+                <span class="score" [class.score-live]="g.status === 'Ongoing'">
+                  {{ g.local_goals }} - {{ g.visitant_goals }}
+                </span>
+                <span class="team-name">{{ getTeamName(g.visitant_team) }}</span>
+              </div>
+
+              <div class="game-meta d-flex align-items-center gap-3">
+                <div class="game-datetime d-flex align-items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"/>
+                  </svg>
+                  <span>{{ g.date }}</span>
+                  @if (g.start_time) {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                      <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                    </svg>
+                    <span>{{ g.start_time }}</span>
+                  }
+                </div>
+                <span class="game-status-badge"
+                      [class.badge-live]="g.status === 'Ongoing'"
+                      [class.badge-finished]="g.status === 'Finished'"
+                      [class.badge-upcoming]="g.status === 'Scheduled'"
+                      [class.badge-half]="g.status === 'HalfTime'">
+                  {{ g.status === 'HalfTime' ? 'Medio Tiempo' : g.status }}
+                </span>
+              </div>
+
+              <svg class="expand-icon"
+                   [class.expanded]="expandedGameId() === g.id"
+                   xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+            </div>
+
+            <!-- Expanded content -->
+            @if (expandedGameId() === g.id) {
+              <div class="game-body">
+                <div class="divider"></div>
+
+                <!-- Game controls -->
+                <div class="game-controls d-flex gap-2 mb-3 flex-wrap">
+                  @if (g.status === 'Scheduled') {
+                    <button class="btn btn-sm btn-primary gradient-button" [disabled]="updating() || !canStartGame(g)" (click)="startGame(g)">
+                      Iniciar Partido
+                    </button>
+                  }
+                  @if (g.status === 'Ongoing') {
+                    <button class="btn btn-sm btn-warning" [disabled]="updating()" (click)="halfTime(g)">
+                      Medio Tiempo
+                    </button>
+                  }
+                  @if (g.status === 'HalfTime') {
+                    <button class="btn btn-sm btn-primary" [disabled]="updating()" (click)="secondHalf(g)">
+                      Segundo Tiempo
+                    </button>
+                  }
+                  @if (g.status === 'Ongoing') {
+                    <button class="btn btn-sm btn-danger" [disabled]="updating()" (click)="finishGame(g)">
+                      Finalizar
+                    </button>
+                  }
+                </div>
+
+                <!-- Events section -->
+                <div class="events-section">
+                  <h4 class="events-title">Eventos del Partido</h4>
+
+                  @if (eventsLoading() && gameEvents().length === 0) {
+                    <div class="text-center py-2">
+                      <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                    </div>
+                  }
+
+                  <div class="events-timeline">
+                    @if (gameEvents().length === 0 && !eventsLoading()) {
+                      <p class="text-muted-custom text-center py-2 mb-0 small">No hay eventos registrados</p>
+                    }
+                    @for (e of gameEvents(); track e.id) {
+                      <div class="event-item">
+                        <span class="event-icon">{{ eventIcon(e.typeEvent) }}</span>
+                        <span class="event-minute">{{ e.minute }}'</span>
+                        <span class="event-type">{{ e.typeEvent }}</span>
+                        <span class="event-player">{{ e.playerName ?? '—' }}</span>
+                        <button class="btn btn-sm btn-danger event-delete" (click)="removeEvent(e.id, g.id)">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                          </svg>
+                        </button>
+                      </div>
+                    }
+                  </div>
+
+                  <!-- Add event form -->
+                  @if (g.status === 'Ongoing') {
+                    <div class="add-event-form">
+                      <div class="divider"></div>
+                      <h5 class="add-event-title">Agregar Evento</h5>
+                      <div class="add-event-row d-flex align-items-center gap-2 flex-wrap">
+                        <select #eventType class="form-select form-select-sm event-select">
+                          <option value="" disabled selected>Tipo</option>
+                          <option value="Goal">⚽ Gol</option>
+                          <option value="Yellow Card">🟨 Tarjeta Amarilla</option>
+                          <option value="Red Card">🟥 Tarjeta Roja</option>
+                        </select>
+                        <input
+                          #eventMinute
+                          type="number"
+                          class="form-control form-control-sm minute-input"
+                          [value]="elapsedMinutes()"
+                          min="0"
+                          max="90"
+                          placeholder="Min"
+                        />
+                        <select #eventPlayer class="form-select form-select-sm event-select">
+                          <option value="" disabled selected>Jugador</option>
+                          @for (p of getPlayersByTeam(g); track p.id) {
+                            <option [value]="p.id">{{ p.name }}</option>
+                          }
+                        </select>
+                        <button
+                          class="btn btn-sm btn-primary gradient-button"
+                          [disabled]="eventsLoading()"
+                          (click)="addEvent(eventType.value, eventMinute.value, eventPlayer.value);
+                                   eventType.value=''; eventMinute.value=elapsedMinutesStr(); eventPlayer.value=''"
+                        >
+                          Agregar
+                        </button>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  } @else {
+    <div class="empty-state text-center py-5 section-dark rounded-4">
+      <div class="empty-icon mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16" class="text-muted-custom">
+          <path d="M2.5 2.5A.5.5 0 0 1 3 2h10a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5v-7Zm-2 11a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5Z"/>
+        </svg>
+      </div>
+      <h5 class="mb-2">Selecciona un torneo</h5>
+      <p class="text-muted-custom mb-0">Elige un torneo para ver sus partidos.</p>
+    </div>
+  }
+</div>

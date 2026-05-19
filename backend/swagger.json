@@ -1835,6 +1835,11 @@
                         "type": "string",
                         "format": "date"
                     },
+                    "start_time": {
+                        "type": "string",
+                        "format": "time",
+                        "nullable": true
+                    },
                     "match": {
                         "type": "integer"
                     },
@@ -1938,6 +1943,11 @@
                     "date": {
                         "type": "string",
                         "format": "date"
+                    },
+                    "start_time": {
+                        "type": "string",
+                        "format": "time",
+                        "nullable": true
                     },
                     "match": {
                         "type": "integer"
