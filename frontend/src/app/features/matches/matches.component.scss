@@ -1,7 +1,8 @@
 @import 'variables';
 
 .matches-page {
-  max-width: 900px;
+  width: 100%;
+  padding: 1.5rem;
 }
 
 // ── Header ──────────────────────────────────────────────
@@ -75,6 +76,7 @@
   padding: 1rem 1.25rem;
   cursor: pointer;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .match-info {
@@ -154,7 +156,16 @@
   background-color: $bg-elevated;
   border-radius: 10px;
   gap: 0.75rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    .game-meta {
+      justify-content: space-between;
+    }
+  }
 }
 
 .game-teams {
@@ -196,8 +207,8 @@
 }
 
 .team-select {
-  width: auto;
-  min-width: 140px;
+  min-width: 0;
+  flex: 1 1 120px;
   background-color: $bg-surface;
   border: 1px solid $border-default;
   color: $text-primary;
@@ -211,8 +222,8 @@
 }
 
 .time-input {
-  width: auto;
-  min-width: 130px;
+  min-width: 0;
+  flex: 1 1 120px;
   background-color: $bg-surface;
   border: 1px solid $border-default;
   color: $text-primary;

@@ -16,13 +16,14 @@ import {
 import { selectTeamList } from '../../store/Team/team.selectors';
 import { TeamActions } from '../../store/Team/team.actions';
 import { Match } from '../../store/Match/match.models';
-import { MatchFormComponent } from './match-form.component';
+import { MatchFormComponent } from '../../shared/components/match-form/match-form.component';
+import { ConfirmDeleteDialog } from '../../shared/components/confirm-delete/confirm-delete.dialog';
 
 @Component({
   selector: 'app-matches',
   templateUrl: './matches.component.html',
   styleUrl: './matches.component.scss',
-  imports: [MatchFormComponent],
+  imports: [MatchFormComponent, ConfirmDeleteDialog],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatchesComponent implements OnInit {
@@ -41,6 +42,9 @@ export class MatchesComponent implements OnInit {
   expandedMatchId = signal<number | null>(null);
   showMatchForm = signal(false);
   editingMatch = signal<Match | null>(null);
+  showDeleteDialog = signal(false);
+  deletingMatch = signal<Match | null>(null);
+  deleting = signal(false);
   gameError = signal<string | null>(null);
 
   minNewMatchDate = computed(() => {
@@ -126,10 +130,26 @@ export class MatchesComponent implements OnInit {
     this.closeForm();
   }
 
-  deleteMatch(m: Match): void {
-    if (confirm(`¿Eliminar la jornada #${m.number}?`)) {
-      this.store.dispatch(MatchActions.delete({ id: m.id }));
-    }
+  confirmDelete(m: Match): void {
+    this.deletingMatch.set(m);
+    this.showDeleteDialog.set(true);
+  }
+
+  executeDelete(): void {
+    const m = this.deletingMatch();
+    if (!m) return;
+    this.deleting.set(true);
+    this.store.dispatch(MatchActions.delete({ id: m.id }));
+    setTimeout(() => {
+      this.deleting.set(false);
+      this.showDeleteDialog.set(false);
+      this.deletingMatch.set(null);
+    }, 300);
+  }
+
+  cancelDelete(): void {
+    this.showDeleteDialog.set(false);
+    this.deletingMatch.set(null);
   }
 
   getGamesForMatch(matchId: number): import('../../../client/models').Game[] {

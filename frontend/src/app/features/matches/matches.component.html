@@ -100,7 +100,7 @@
                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10z"/>
                   </svg>
                 </button>
-                <button class="btn btn-sm btn-danger" (click)="$event.stopPropagation(); deleteMatch(m)">
+                <button class="btn btn-sm btn-danger" (click)="$event.stopPropagation(); confirmDelete(m)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                     <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1z"/>
@@ -223,5 +223,16 @@
     [submitLabel]="editingMatch() ? 'Actualizar' : 'Guardar'"
     (onSave)="onSaveForm($event)"
     (onCancel)="closeForm()"
+  />
+}
+
+@if (showDeleteDialog()) {
+  <app-confirm-delete
+    [name]="'Jornada #' + (deletingMatch()?.number ?? '')"
+    [title]="'Eliminar jornada'"
+    [message]="'¿Estás seguro de eliminar la <strong>Jornada #' + (deletingMatch()?.number ?? '') + '</strong>?<br />Esta acción eliminará también todos los partidos asociados.'"
+    [deleting]="deleting()"
+    (onConfirm)="executeDelete()"
+    (onCancel)="cancelDelete()"
   />
 }

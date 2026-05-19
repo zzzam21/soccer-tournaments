@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Match } from '../../store/Match/match.models';
+import { Match } from '../../../store/Match/match.models';
 
 @Component({
   selector: 'app-match-form',
