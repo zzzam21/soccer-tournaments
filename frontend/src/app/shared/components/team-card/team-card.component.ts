@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { Team } from '../../store/Team/team.models';
+import { Team } from '../../../store/Team/team.models';
 
 @Component({
   selector: 'app-team-card',

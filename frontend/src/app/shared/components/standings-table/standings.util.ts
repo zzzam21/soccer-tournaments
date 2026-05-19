@@ -1,6 +1,6 @@
-import { TeamStanding } from '../../store/Tournament/tournament.models';
-import type { Team } from '../../../client/models';
-import type { Game } from '../../../client/models';
+import { TeamStanding } from '../../../store/Tournament/tournament.models';
+import type { Team } from '../../../../client/models';
+import type { Game } from '../../../../client/models';
 
 export function computeStandings(teams: Team[], games: Game[]): TeamStanding[] {
   const standingsMap = new Map<number, TeamStanding>();

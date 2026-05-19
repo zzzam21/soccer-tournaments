@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { Player } from '../../store/Player/player.models';
+import { Player } from '../../../store/Player/player.models';
 
 @Component({
   selector: 'app-player-card',
@@ -18,4 +18,3 @@ export class PlayerCardComponent {
     img.style.display = 'none';
   }
 }
-

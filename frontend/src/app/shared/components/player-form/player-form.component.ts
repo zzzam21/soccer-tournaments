@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Player } from '../../store/Player/player.models';
+import { Player } from '../../../store/Player/player.models';
 
 @Component({
   selector: 'app-player-form',

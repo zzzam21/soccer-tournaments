@@ -13,10 +13,11 @@
 
 .modal-dialog {
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
 }
 
 .modal-content {
+  background: $bg-surface;
   border: 1px solid $border-default;
   border-radius: $border-radius;
 }
@@ -36,6 +37,11 @@
   border: none;
   color: #fff;
 
-  &:hover { opacity: 0.9; }
-  &:disabled { opacity: 0.5; }
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
 }

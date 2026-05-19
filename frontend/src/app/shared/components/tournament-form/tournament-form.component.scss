@@ -13,18 +13,30 @@
 
 .modal-dialog {
   width: 100%;
-  max-width: 420px;
+  max-width: 600px;
 }
 
 .modal-content {
+  background: $bg-surface;
   border: 1px solid $border-default;
   border-radius: $border-radius;
 }
 
-.icon-danger {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: rgba($danger, 0.15);
-  color: $danger;
+.btn-close-white {
+  filter: brightness(0) invert(1);
+}
+
+.form-label {
+  color: $text-primary;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.gradient-button {
+  background: $gradient-button;
+  border: none;
+  color: #fff;
+
+  &:hover { opacity: 0.9; }
+  &:disabled { opacity: 0.5; }
 }

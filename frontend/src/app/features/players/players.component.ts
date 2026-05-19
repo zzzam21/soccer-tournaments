@@ -13,9 +13,9 @@ import {
   selectSelectedPlayer,
 } from '../../store/Player/player.selectors';
 import { Player } from '../../store/Player/player.models';
-import { PlayerCardComponent } from './player-card.component';
-import { PlayerFormComponent } from './player-form.component';
-import { ConfirmDeleteDialog } from './confirm-delete.dialog';
+import { PlayerCardComponent } from '../../shared/components/player-card/player-card.component';
+import { PlayerFormComponent } from '../../shared/components/player-form/player-form.component';
+import { ConfirmDeleteDialog } from '../../shared/components/confirm-delete/confirm-delete.dialog';
 
 @Component({
   selector: 'app-players',

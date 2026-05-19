@@ -90,7 +90,9 @@
 
 @if (showDeleteDialog()) {
   <app-confirm-delete
-    [teamName]="deletingTeam()?.name ?? ''"
+    [name]="deletingTeam()?.name ?? ''"
+    [title]="'Eliminar equipo'"
+    [message]="'¿Estás seguro de eliminar <strong>' + (deletingTeam()?.name ?? '') + '</strong>?<br />Esta acción eliminará también todos sus jugadores y partidos asociados.'"
     [deleting]="deleting()"
     (onConfirm)="executeDelete()"
     (onCancel)="cancelDelete()"

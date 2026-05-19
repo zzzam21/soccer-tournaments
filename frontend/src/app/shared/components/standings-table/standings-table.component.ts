@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { TeamStanding } from '../../store/Tournament/tournament.models';
+import { TeamStanding } from '../../../store/Tournament/tournament.models';
 
 @Component({
   selector: 'app-standings-table',

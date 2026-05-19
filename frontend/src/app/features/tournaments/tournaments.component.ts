@@ -16,11 +16,11 @@ import {
   selectTournamentStandingsLoading,
 } from '../../store/Tournament/tournament.selectors';
 import { Tournament } from '../../store/Tournament/tournament.models';
-import { TournamentCardComponent } from './tournament-card.component';
-import { TournamentFormComponent } from './tournament-form.component';
-import { StandingsTableComponent } from './standings-table.component';
-import { TeamManagerComponent } from './team-manager.component';
-import { ConfirmDeleteDialog } from './confirm-delete.dialog';
+import { TournamentCardComponent } from '../../shared/components/tournament-card/tournament-card.component';
+import { TournamentFormComponent } from '../../shared/components/tournament-form/tournament-form.component';
+import { StandingsTableComponent } from '../../shared/components/standings-table/standings-table.component';
+import { TeamManagerComponent } from '../../shared/components/team-manager/team-manager.component';
+import { ConfirmDeleteDialog } from '../../shared/components/confirm-delete/confirm-delete.dialog';
 
 @Component({
   selector: 'app-tournaments',

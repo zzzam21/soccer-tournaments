@@ -6,9 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { TeamActions } from '../../store/Team/team.actions';
 import { selectTeamList, selectTeamLoading, selectSelectedTeam, selectTeamTournaments, selectTeamTournamentsLoading, selectTeamError } from '../../store/Team/team.selectors';
 import { Team } from '../../store/Team/team.models';
-import { TeamCardComponent } from './team-card.component';
-import { TeamFormComponent } from './team-form.component';
-import { ConfirmDeleteDialog } from './confirm-delete.dialog';
+import { TeamCardComponent } from '../../shared/components/team-card/team-card.component';
+import { TeamFormComponent } from '../../shared/components/team-form/team-form.component';
+import { ConfirmDeleteDialog } from '../../shared/components/confirm-delete/confirm-delete.dialog';
 
 @Component({
   selector: 'app-teams',

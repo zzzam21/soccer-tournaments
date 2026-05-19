@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Tournament } from '../../store/Tournament/tournament.models';
+import { Tournament } from '../../../store/Tournament/tournament.models';
 
 @Component({
   selector: 'app-tournament-form',

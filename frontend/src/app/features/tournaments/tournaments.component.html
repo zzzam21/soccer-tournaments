@@ -141,7 +141,9 @@
 
 @if (showDeleteDialog()) {
   <app-confirm-delete
-    [tournamentName]="deletingTournament()?.name ?? ''"
+    [name]="deletingTournament()?.name ?? ''"
+    [title]="'Eliminar torneo'"
+    [message]="'¿Estás seguro de eliminar <strong>' + (deletingTournament()?.name ?? '') + '</strong>?<br />Esta acción eliminará también todos los equipos, jugadores y partidos asociados.'"
     [deleting]="deleting()"
     (onConfirm)="executeDelete()"
     (onCancel)="cancelDelete()"

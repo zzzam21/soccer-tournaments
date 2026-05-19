@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Team } from '../../store/Team/team.models';
+import { Team } from '../../../store/Team/team.models';
 
 @Component({
   selector: 'app-team-form',

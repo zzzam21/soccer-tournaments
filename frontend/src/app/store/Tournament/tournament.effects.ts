@@ -6,7 +6,7 @@ import { TeamsService } from '../../../client/services/teams.service';
 import { MatchesService } from '../../../client/services/matches.service';
 import { GamesService } from '../../../client/services/games.service';
 import { TournamentActions } from './tournament.actions';
-import { computeStandings } from '../../features/tournaments/standings.util';
+import { computeStandings } from '../../shared/components/standings-table/standings.util';
 import type { Game } from '../../../client/models';
 
 @Injectable()

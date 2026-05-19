@@ -92,7 +92,9 @@
 
 @if (showDeleteDialog()) {
   <app-confirm-delete
-    [playerName]="deletingPlayer()?.name ?? ''"
+    [name]="deletingPlayer()?.name ?? ''"
+    [title]="'Eliminar jugador'"
+    [message]="'¿Estás seguro de eliminar a <strong>' + (deletingPlayer()?.name ?? '') + '</strong>?<br />El jugador será eliminado del equipo al que pertenece.'"
     [deleting]="deleting()"
     (onConfirm)="executeDelete()"
     (onCancel)="cancelDelete()"

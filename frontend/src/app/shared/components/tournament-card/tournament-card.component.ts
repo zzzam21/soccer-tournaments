@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { Tournament } from '../../store/Tournament/tournament.models';
+import { Tournament } from '../../../store/Tournament/tournament.models';
 
 @Component({
   selector: 'app-tournament-card',

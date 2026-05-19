@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, HostListener, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Team } from '../../store/Team/team.models';
+import { Team } from '../../../store/Team/team.models';
 
 @Component({
   selector: 'app-team-manager',
